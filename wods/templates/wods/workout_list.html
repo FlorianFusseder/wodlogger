@@ -5,10 +5,10 @@
     <title>Workout-List</title>
 </head>
 <body>
-{% if latest_workouts_list %}
+{% if workout_list %}
     <ul>
-    {% for workout in latest_workouts_list %}
-        <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.workout_description }}</a></li>
+    {% for workout in workout_list %}
+        <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.workout_description }} from {{ workout.pub_date }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
