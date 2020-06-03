@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workout-List</title>
+</head>
+<body>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'athlete/style.css' %}">
+{% if athlete_list %}
+    <ul>
+        {% for athlete in athlete_list %}
+            <li><a href="{% url 'athletes:detail' athlete.id %}">{{ athlete.first_name }} {{ athlete.last_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No Athletes are available.</p>
+{% endif %}
+</body>
+</html>

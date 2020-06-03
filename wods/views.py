@@ -1,10 +1,9 @@
 import logging
 
-from django.http import HttpResponse, Http404
-from django.shortcuts import render, get_object_or_404
-from django.template import loader
+from django.forms import DateTimeInput
 from django.views import generic
 
+from wods.forms import WorkoutForm
 from wods.models import Workout
 
 logger = logging.getLogger(__name__)
@@ -21,5 +20,6 @@ class DetailView(generic.DetailView):
     model = Workout
 
 
-class CreateView(generic.CreateView):
+class CreateView(generic.edit.CreateView):
     model = Workout
+    form_class = WorkoutForm

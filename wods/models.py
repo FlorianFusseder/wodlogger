@@ -1,18 +1,16 @@
 from django.db import models
+from django.urls import reverse
 
-
-class Athlete(models.Model):
-    first_name = models.CharField(max_length=50)
-    second_name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return f"Athlete [ first_Name: {self.first_name}, second_name: {self.second_name} ]"
+from athletes.models import Athlete
 
 
 class Workout(models.Model):
     workout_description = models.TextField(default='')
     athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE)
     pub_date = models.DateTimeField('date published')
+
+    def get_absolute_url(self):
+        return reverse('wods:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return f"Workout [ workout_description: {self.workout_description}, athlete: {self.athlete}, " \
