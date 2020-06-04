@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Score-List</title>
+</head>
+<body>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'wods/style.css' %}">
+{% if score_list %}
+    <ul>
+        {% for score in score_list %}
+            <li>{{ score.workout.description }} {{ score.type }}
+                from {{ score.date }} by {{ score.athlete.last_name }}, {{ score.athlete.first_name }}
+                at {{ score.score }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No Scores are available.</p>
+{% endif %}
+</body>
+</html>

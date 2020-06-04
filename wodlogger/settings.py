@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'wods.apps.WodsConfig',
     'athletes.apps.AthletesConfig',
+    'scores.apps.ScoresConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

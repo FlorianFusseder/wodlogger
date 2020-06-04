@@ -1,12 +1,7 @@
-import logging
-
-from django.forms import DateTimeInput
 from django.views import generic
 
 from wods.forms import WorkoutForm
 from wods.models import Workout
-
-logger = logging.getLogger(__name__)
 
 
 class IndexView(generic.ListView):
