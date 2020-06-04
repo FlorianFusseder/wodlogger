@@ -10,8 +10,9 @@
 {% if workout_list %}
     <ul>
         {% for workout in workout_list %}
-            <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.workout_description }}
-                from {{ workout.pub_date }}</a></li>
+            <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.description }} {{ workout.score_type }}
+                from {{ workout.date }} by {{ workout.athlete.last_name }}, {{ workout.athlete.first_name }}
+                at {{ workout.score }}</a></li>
         {% endfor %}
     </ul>
 {% else %}

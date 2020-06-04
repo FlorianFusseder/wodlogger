@@ -6,7 +6,7 @@ from wods.models import Workout
 class WorkoutForm(ModelForm):
     class Meta:
         model = Workout
-        fields = ['workout_description', 'athlete', 'pub_date', ]
+        fields = '__all__'
         widgets = {
-            'pub_date': DateInput(attrs={'type': 'date'}),
+            'date': DateInput(attrs={'type': 'date'}),
         }

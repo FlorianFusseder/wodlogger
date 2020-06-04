@@ -13,7 +13,7 @@ class IndexView(generic.ListView):
     context_object_name = 'workout_list'
 
     def get_queryset(self):
-        return Workout.objects.order_by('-pub_date')[:25]
+        return Workout.objects.order_by('-date')[:25]
 
 
 class DetailView(generic.DetailView):

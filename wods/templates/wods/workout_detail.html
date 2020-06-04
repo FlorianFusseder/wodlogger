@@ -6,8 +6,11 @@
 </head>
 <body>
 <h1>Workout</h1>
-DESC: {{ workout.workout_description }}<br>
-DATE: {{ workout.pub_date }}<br>
-ATHLETE: {{ workout.athlete.first_name }} {{ workout.athlete.last_name }}<br>
+DATE: {{ workout.date }}<br>
+ATHLETE: {{ workout.athlete.first_name }} {{ workout.athlete.last_name }}<br><br>
+
+DESC: {{ workout.description }}<br>
+TYPE: {{ workout.score_type }}<br>
+SCORE: {{ workout.score }}<br>
 </body>
 </html>

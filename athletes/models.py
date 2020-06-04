@@ -10,4 +10,4 @@ class Athlete(models.Model):
         return reverse('athletes:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return f"Athlete [ first_Name: {self.first_name}, second_name: {self.last_name} ]"
+        return f"Athlete [ first_name: {self.first_name}, second_name: {self.last_name} ]"
