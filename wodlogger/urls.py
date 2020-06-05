@@ -21,4 +21,5 @@ urlpatterns = [
     path('athletes/', include('athletes.urls')),
     path('scores/', include('scores.urls')),
     path('admin/', admin.site.urls),
+    path('', include('django.contrib.auth.urls')),
 ]
