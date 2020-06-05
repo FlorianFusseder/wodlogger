@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        Hi {{ user.username }}!
+        <br><br>
+
+        <p>
+            <a href="{% url 'login' %}"><input type="submit" value="logout"/></a>
+        </p>
+        <p>
+            <a href="{% url 'wods:index' %}"><input type="submit" value="look at wods"/></a>
+            <a href="{% url 'wods:create' %}"><input type="submit" value="create a wod"/></a>
+        </p>
+        <p>
+            <a href="{% url 'score:index' %}"><input type="submit" value="look at scores"/></a>
+            <a href="{% url 'score:create' %}"><input type="submit" value="log a score"/></a>
+        </p>
+        <p>
+            <a href="{% url 'athletes:index' %}"><input type="submit" value="look at athletes"/></a>
+            <a href="{% url 'athletes:create' %}"><input type="submit" value="create an athlete"/></a>
+        </p>
+
+    {% else %}
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">login</a>
+    {% endif %}
+{% endblock %}

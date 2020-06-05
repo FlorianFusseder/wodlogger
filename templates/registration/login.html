@@ -1,12 +1,33 @@
-{% extends 'root/base.html' %}
-
-{% block title %}Login{% endblock %}
-
+{% extends "django_registration/registration_base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Login" %}{% endblock %}
 {% block content %}
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
+    {% url 'password_reset' as auth_pwd_reset_url %}
+    {% url 'django_registration_register' as register_url %}
+
+    {% if form.errors %}
+        <p>{% blocktrans %}Your username and password didn't match. Please try again.{% endblocktrans %}</p>
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">{% csrf_token %}
+        <table>
+            <tr>
+                <td>{% trans form.username.label_tag %}</td>
+                <td>{{ form.username }}</td>
+            </tr>
+            <tr>
+                <td>{% trans form.password.label_tag %}</td>
+                <td>{{ form.password }}</td>
+            </tr>
+
+        </table>
+
+        <input type="submit" value="{% trans "login" %}"/>
+        <input type="hidden" name="next" value="{{ next }}"/>
+
+        <p>{% blocktrans %}<a href="{{ auth_pwd_reset_url }}">Forgot</a> your password?
+            <a href="{{ register_url }}">Need an account</a>?{% endblocktrans %}</p>
+
     </form>
+
 {% endblock %}
