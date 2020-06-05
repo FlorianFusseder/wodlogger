@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wodlogger</title>
+</head>
+<body>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}">
+<form action="{% url 'login' %}">
+    <input type="submit" value="Login"/>
+</form>
+</body>
+</html>
