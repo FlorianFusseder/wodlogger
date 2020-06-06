@@ -10,14 +10,15 @@
 {% if score_list %}
     <ul>
         {% for score in score_list %}
-            <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.description }} {{ score.type }}
-                from {{ score.date }} by
+            <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.description }} at {{ score.score }}
+                from {{ score.execution_date }} by
                 {% if score.athlete.user == user %}
                     You
                 {% else %}
                     {{ score.athlete.get_signature }}
                 {% endif %}
-                at {{ score.score }}</a></li>
+                ( {{ score.logging_date }} )
+            </a></li>
         {% endfor %}
     </ul>
 {% else %}

@@ -1,3 +1,4 @@
+import django
 from django.db import models
 from django.urls import reverse
 
@@ -7,7 +8,8 @@ from wods.models import Workout
 
 class Score(models.Model):
     score = models.CharField(max_length=50)
-    date = models.DateField()
+    execution_date = models.DateField()
+    logging_date = models.DateTimeField(default=django.utils.timezone.now)
     athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE)
     workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
 
@@ -15,4 +17,4 @@ class Score(models.Model):
         return reverse('score:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return f"Score [ {self.workout}  score: {self.score}, date: {self.date} ]"
+        return f"Score [ {self.workout}  score: {self.score}, date: {self.execution_date} ]"

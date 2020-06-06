@@ -14,4 +14,4 @@ class WorkoutForm(ModelForm):
 class AddScoreForm(ModelForm):
     class Meta(ScoreForm.Meta):
         model = Score
-        fields = ['score', 'date']
+        fields = ['score', 'execution_date']

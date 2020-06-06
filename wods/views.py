@@ -19,7 +19,7 @@ class DetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['scores'] = Score.objects.filter(workout_id=kwargs['object'].id)
+        context['scores'] = Score.objects.filter(workout_id=kwargs['object'].id).order_by('-logging_date')[:25]
         return context
 
 
@@ -43,7 +43,7 @@ class AddScoreView(generic.UpdateView):
     def form_valid(self, form):
         workout = form.save(commit=False)
         score_ = form.cleaned_data['score']
-        date_ = form.cleaned_data['date']
+        date_ = form.cleaned_data['execution_date']
         user = get_user(self.request)
-        Score.objects.create(score=score_, date=date_, workout=workout, athlete=user.athlete).save()
+        Score.objects.create(score=score_, execution_date=date_, workout=workout, athlete=user.athlete).save()
         return super().form_valid(form)
