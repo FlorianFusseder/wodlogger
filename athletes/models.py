@@ -8,10 +8,13 @@ class Athlete(models.Model):
     last_name = models.CharField(max_length=50)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    def get_signature(self):
+        if self.last_name and self.first_name:
+            return f"{self.last_name}, {self.first_name}"
+        return f"{self.user.username}"
+
     def get_absolute_url(self):
         return reverse('athletes:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return f"Athlete [ first_name: {self.first_name}, second_name: {self.last_name} ]"
-
-

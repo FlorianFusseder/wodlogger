@@ -6,11 +6,10 @@
 </head>
 <body>
 <h1>Score</h1>
-ATHLETE: {{ score.athlete.first_name }} {{ score.athlete.last_name }}<br><br>
+ATHLETE: {{ score.athlete.get_signature }}<br><br>
 AT: {{ score.date }}<br>
 
 DESC: {{ score.workout.description }}<br>
-TYPE: {{ score.type }}<br>
 SCORE: {{ score.score }}<br>
 </body>
 </html>
