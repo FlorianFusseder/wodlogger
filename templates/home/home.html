@@ -7,9 +7,12 @@
 <body>
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}">
-<a href="{% url 'login' %}">
-    <input type="submit" value="Login"/>
-</a>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'profiles:profile' %}"> <input type="submit" value="Login"/></a>
+{% else %}
+    <a href="{% url 'login' %}"><input type="submit" value="Login"/></a>
+{% endif %}
 <br><br>
 <a href="{% url 'profiles:signup' %}">
     <input type="submit" value="Register"/>
