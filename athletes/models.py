@@ -13,3 +13,5 @@ class Athlete(models.Model):
 
     def __str__(self):
         return f"Athlete [ first_name: {self.first_name}, second_name: {self.last_name} ]"
+
+

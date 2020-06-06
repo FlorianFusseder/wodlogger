@@ -4,7 +4,7 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        Hi {{ user.username }}!
+        Hi {{ user.athlete.first_name }}!
         <br><br>
 
         <p>
