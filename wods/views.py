@@ -17,6 +17,11 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Workout
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['scores'] = Score.objects.filter(workout_id=kwargs['object'].id)
+        return context
+
 
 class CreateView(generic.edit.CreateView):
     model = Workout
@@ -42,4 +47,3 @@ class AddScoreView(generic.UpdateView):
         user = get_user(self.request)
         Score.objects.create(score=score_, date=date_, workout=workout, athlete=user.athlete).save()
         return super().form_valid(form)
-

@@ -15,4 +15,4 @@ class Score(models.Model):
         return reverse('score:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return f"Score [ {self.workout} score_type: {self.type}, score: {self.score}, date: {self.date} ]"
+        return f"Score [ {self.workout}  score: {self.score}, date: {self.date} ]"

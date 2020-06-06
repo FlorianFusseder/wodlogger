@@ -8,7 +8,7 @@ class IndexView(generic.ListView):
     context_object_name = 'score_list'
 
     def get_queryset(self):
-        return Score.objects.order_by('-date')[:25]
+        return Score.objects.order_by('date')[:25]
 
 
 class DetailView(generic.DetailView):

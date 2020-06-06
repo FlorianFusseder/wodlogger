@@ -10,7 +10,16 @@ CREATED BY: {{ workout.creator.first_name }} {{ workout.creator.last_name }}<br>
 AT: {{ workout.date }}<br>
 
 DESC: {{ workout.description }}<br>
-
+<br>
+SCORES:
+{% if scores %}
+    <ul>
+        {% for score in scores  %}
+            <li><a href="{% url 'score:detail' score.id %}">{{ score.score }}
+                from {{ score.date }} by {{ score.athlete.get_signature }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
 <a href="{% url 'wods:add_score' workout.id %}">Log a score</a> for this workout
 </body>
 </html>
