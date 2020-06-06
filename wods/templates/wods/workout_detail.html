@@ -10,5 +10,7 @@ CREATED BY: {{ workout.creator.first_name }} {{ workout.creator.last_name }}<br>
 AT: {{ workout.date }}<br>
 
 DESC: {{ workout.description }}<br>
+
+<a href="{% url 'wods:add_score' workout.id %}">Log a score</a> for this workout
 </body>
 </html>

@@ -10,9 +10,14 @@
 {% if score_list %}
     <ul>
         {% for score in score_list %}
-            <li>{{ score.workout.description }} {{ score.type }}
-                from {{ score.date }} by {{ score.athlete.last_name }}, {{ score.athlete.first_name }}
-                at {{ score.score }}</li>
+            <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.description }} {{ score.type }}
+                from {{ score.date }} by
+                {% if score.athlete.user == user %}
+                    You
+                {% else %}
+                    {{ score.athlete.get_signature }}
+                {% endif %}
+                at {{ score.score }}</a></li>
         {% endfor %}
     </ul>
 {% else %}

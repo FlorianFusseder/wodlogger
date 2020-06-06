@@ -6,10 +6,21 @@
 </head>
 <body>
 <h1>Score</h1>
-ATHLETE: {{ score.athlete.get_signature }}<br><br>
+ATHLETE:
+{% if score.athlete.user == user %}
+    You
+{% else %}
+    {{ score.athlete.get_signature }}
+{% endif %}
+<br><br>
 AT: {{ score.date }}<br>
 
 DESC: {{ score.workout.description }}<br>
 SCORE: {{ score.score }}<br>
+
+{% if score.athlete.user == user %}
+    <a href="{% url 'score:update' score.id %}"><input type="submit" value="edit score"/></a>
+{% endif %}
+<a href="{% url 'wods:detail' score.workout_id %}"><input type="submit" value="view wod"/></a>
 </body>
 </html>
