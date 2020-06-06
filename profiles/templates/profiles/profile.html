@@ -4,9 +4,9 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <h1>Hi {{ user.username }}!</h1>
+        <h1>Welcome!</h1>
         <h2>Your Athlete Profile:</h2>
-        User Name: {{ user.athlete.username }}<br>
+        User Name:  {{ user.username }}<br>
         {% if user.athlete.first_name %}
             First Name: {{ user.athlete.first_name }}<br>
         {% endif %}
@@ -15,7 +15,7 @@
         {% endif %}
 
         <p>
-            <a href="{% url 'login' %}"><input type="submit" value="logout"/></a>
+            <a href="{% url 'logout' %}"><input type="submit" value="logout"/></a>
         </p>
         <p>
             <a href="{% url 'wods:index' %}"><input type="submit" value="look at wods"/></a>

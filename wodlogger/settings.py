@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'wods.apps.WodsConfig',
     'athletes.apps.AthletesConfig',
     'scores.apps.ScoresConfig',
+    'profiles.apps.ProfilesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -125,7 +126,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Login
-LOGIN_REDIRECT_URL = '/athletes/profile'
+LOGIN_REDIRECT_URL = '/profile'
 LOGOUT_REDIRECT_URL = '/'
 
 # Logging

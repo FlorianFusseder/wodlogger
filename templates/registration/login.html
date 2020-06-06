@@ -3,7 +3,7 @@
 {% block title %}{% trans "Login" %}{% endblock %}
 {% block content %}
     {% url 'password_reset' as auth_pwd_reset_url %}
-    {% url 'athletes:signup' as register_url %}
+    {% url 'profiles:signup' as register_url %}
 
     {% if form.errors %}
         <p>{% blocktrans %}Your username and password didn't match. Please try again.{% endblocktrans %}</p>
@@ -25,8 +25,10 @@
         <input type="submit" value="{% trans "login" %}"/>
         <input type="hidden" name="next" value="{{ next }}"/>
 
-        <p>{% blocktrans %}<a href="{{ auth_pwd_reset_url }}">Forgot</a> your password?
-            <a href="{{ register_url }}">Need an account</a>?{% endblocktrans %}</p>
+        <p>
+            {#                <a href="{{ auth_pwd_reset_url }}">Forgot</a> your password?#}
+            <a href="{{ register_url }}">Need an account</a>?
+        </p>
 
     </form>
 
