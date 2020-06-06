@@ -4,8 +4,15 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        Hi {{ user.athlete.first_name }}!
-        <br><br>
+        <h1>Hi {{ user.username }}!</h1>
+        <h2>Your Athlete Profile:</h2>
+        User Name: {{ user.athlete.username }}<br>
+        {% if user.athlete.first_name %}
+            First Name: {{ user.athlete.first_name }}<br>
+        {% endif %}
+        {% if user.athlete.last_name %}
+            Last Name:    {{ user.athlete.last_name }}<br>
+        {% endif %}
 
         <p>
             <a href="{% url 'login' %}"><input type="submit" value="logout"/></a>
@@ -20,6 +27,7 @@
         </p>
         <p>
             <a href="{% url 'athletes:index' %}"><input type="submit" value="look at athletes"/></a>
+            <a href="{% url 'athletes:update' %}"><input type="submit" value="edit your athlete profile"/></a>
         </p>
 
     {% else %}

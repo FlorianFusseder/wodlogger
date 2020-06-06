@@ -10,7 +10,14 @@
 {% if athlete_list %}
     <ul>
         {% for athlete in athlete_list %}
-            <li><a href="{% url 'athletes:detail' athlete.id %}">{{ athlete.first_name }} {{ athlete.last_name }}</a>
+            <li>
+                <a href="{% url 'athletes:detail' athlete.id %}">{{ athlete.user.username }}</a>
+                {% if athlete.first_name %}
+                    {{ athlete.first_name }}
+                {% endif %}
+                {% if athlete.last_name %}
+                    {{ athlete.last_name }}
+                {% endif %}
             </li>
         {% endfor %}
     </ul>

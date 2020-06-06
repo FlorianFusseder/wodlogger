@@ -6,7 +6,12 @@
 </head>
 <body>
 <h1>Athlete</h1>
-First Name: {{ athlete.first_name }}<br>
-Last Name: {{ athlete.last_name }}<br>
+User Name: {{ athlete.user.username }}<br>
+{% if athlete.first_name %}
+    First Name: {{ athlete.first_name }}<br>
+{% endif %}
+{% if athlete.last_name %}
+    Last Name:    {{ athlete.last_name }}<br>
+{% endif %}
 </body>
 </html>
