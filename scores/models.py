@@ -1,3 +1,5 @@
+import datetime
+
 import django
 from django.db import models
 from django.urls import reverse
@@ -8,7 +10,7 @@ from wods.models import Workout
 
 class Score(models.Model):
     score = models.CharField(max_length=50)
-    execution_date = models.DateField()
+    execution_date = models.DateField(default=datetime.date.today)
     logging_date = models.DateTimeField(default=django.utils.timezone.now)
     athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE)
     workout = models.ForeignKey(Workout, on_delete=models.CASCADE)

@@ -6,7 +6,7 @@ from scores.models import Score
 class ScoreForm(ModelForm):
     class Meta:
         model = Score
-        fields = ['score', 'execution_date', 'workout']
+        fields = ['score', 'execution_date']
         widgets = {
             'execution_date': DateInput(attrs={'type': 'date'}),
         }
