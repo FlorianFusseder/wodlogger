@@ -5,11 +5,15 @@
     <title>Log a Workout</title>
 </head>
 <body>
-<h1>Log a Workout</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
-</form>
+{% if user.is_authenticated %}
+    <h1>Log a Workout</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save">
+    </form>
+{% else %}
+    <p><a href="{% url 'login' %}">Login</a> to create a workout</p>
+{% endif %}
 </body>
 </html>
