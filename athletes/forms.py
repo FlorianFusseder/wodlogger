@@ -1,9 +1,8 @@
-from django.forms import ModelForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
-from athletes.models import Athlete
 
-
-class AthleteForm(ModelForm):
+class CustomUserCreationForm(UserCreationForm):
     class Meta:
-        model = Athlete
+        model = User
         fields = '__all__'

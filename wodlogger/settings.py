@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_registration',
 ]
 
 MIDDLEWARE = [
@@ -125,11 +124,9 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-LOGIN_REDIRECT_URL = '/profile'
+# Login
+LOGIN_REDIRECT_URL = '/athletes/profile'
 LOGOUT_REDIRECT_URL = '/'
-
-# Registration
-# https://django-registration.readthedocs.io
 
 # Logging
 LOGGING = {
