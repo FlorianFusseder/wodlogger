@@ -6,7 +6,7 @@
 </head>
 <body>
 {% if user.is_authenticated %}
-    <h1>Log a Workout</h1>
+    <h1>Create a Workout</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

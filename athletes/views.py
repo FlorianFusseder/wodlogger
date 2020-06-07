@@ -1,6 +1,9 @@
+from django.contrib.auth import get_user
 from django.views import generic
 
 from athletes.models import Athlete
+from scores.models import Score
+from wods.models import Workout
 
 
 class IndexView(generic.ListView):
@@ -12,6 +15,17 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Athlete
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = get_user(self.request)
+        context['scores'] = Score.objects.filter(workout_id=kwargs['object'].id,
+                                                 athlete_id=Athlete.objects.get(user_id=user.id).id) \
+                                .order_by('-logging_date')[:25]
+
+        context['workouts'] = Workout.objects.filter(creator=Athlete.objects.get(user_id=user.id).id) \
+                                  .order_by('-date')[:25]
+        return context
 
 
 class UpdateView(generic.UpdateView):

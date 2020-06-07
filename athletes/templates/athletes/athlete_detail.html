@@ -13,5 +13,37 @@ User Name: {{ athlete.user.username }}<br>
 {% if athlete.last_name %}
     Last Name:    {{ athlete.last_name }}<br>
 {% endif %}
+
+
+<h3>Your Scores</h3>
+{% if scores %}
+    <ul>
+        {% for score in scores %}
+            <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.description }} in {{ score.score }}
+                from {{ score.execution_date }} ( {{ score.logging_date }} )</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    No scores logged until now! Get going by
+    <a href="{% url 'wods:create' %}">creating a new workout</a>
+    or
+    <a href="{% url 'wods:index' %}">add a score</a>
+    for an existing workout
+{% endif %}
+
+<br><br>
+
+<h3>Your Workouts</h3>
+{% if workouts %}
+    <ul>
+        {% for workout in workouts %}
+            <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.type }}: {{ workout.description }} created
+                at {{ workout.date }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    No workouts created until now! <a href="{% url 'wods:create' %}">Create a new workout</a>
+{% endif %}
+
 </body>
 </html>

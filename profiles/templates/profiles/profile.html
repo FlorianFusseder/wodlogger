@@ -25,6 +25,8 @@
             <a href="{% url 'score:index' %}"><input type="submit" value="look at scores"/></a>
         </p>
         <p>
+            <a href="{% url 'athletes:detail' user.athlete.id %}"><input type="submit"
+                                                                         value="view your activities"/></a>
             <a href="{% url 'athletes:index' %}"><input type="submit" value="look at athletes"/></a>
             <a href="{% url 'athletes:update' %}"><input type="submit" value="edit your athlete profile"/></a>
         </p>
