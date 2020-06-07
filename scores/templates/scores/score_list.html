@@ -11,14 +11,16 @@
     <ul>
         {% for score in score_list %}
             <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.description }} at {{ score.score }}
-                from {{ score.execution_date }} by
-                {% if score.athlete.user == user %}
-                    You
-                {% else %}
-                    {{ score.athlete.get_signature }}
-                {% endif %}
+                from {{ score.execution_date }}</a> by
+                <a href="{% url 'athletes:detail' score.athlete.id %}">
+                    {% if score.athlete.user == user %}
+                        You
+                    {% else %}
+                        {{ score.athlete.get_signature }}
+                    {% endif %}
+                </a>
                 ( {{ score.logging_date }} )
-            </a></li>
+            </li>
         {% endfor %}
     </ul>
 {% else %}

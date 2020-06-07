@@ -7,11 +7,14 @@
 <body>
 <h1>Score</h1>
 ATHLETE:
-{% if score.athlete.user == user %}
-    You
-{% else %}
-    {{ score.athlete.get_signature }}
-{% endif %}
+<a href="{% url 'athletes:detail' user.athlete.id %}">
+    {% if score.athlete.user == user %}
+        You
+    {% else %}
+        {{ score.athlete.get_signature }}
+    {% endif %}
+</a>
+
 <br><br>
 AT: {{ score.execution_date }}<br>
 

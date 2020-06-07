@@ -6,8 +6,14 @@
 </head>
 <body>
 <h1>Workout</h1>
-CREATED BY: <a
-        href="{% url 'athletes:detail' user.athlete.id %}">{{ workout.creator.first_name }} {{ workout.creator.last_name }}</a>
+CREATED BY:
+<a href="{% url 'athletes:detail' user.athlete.id %}">
+    {% if workout.creator.id == user.athlete.id %}
+        You
+    {% else %}
+        {{ workout.creator.get_signature }}
+    {% endif %}
+</a>
 <br><br>
 AT: {{ workout.date }}<br>
 
@@ -18,7 +24,9 @@ SCORES:
     <ul>
         {% for score in scores %}
             <li><a href="{% url 'score:detail' score.id %}">{{ score.score }}
-                from {{ score.date }} by {{ score.athlete.get_signature }}</a></li>
+                from {{ score.date }}</a>
+                by
+                <a href="{% url 'athletes:detail' user.athlete.id %}">{{ score.athlete.get_signature }}</a></li>
         {% endfor %}
     </ul>
 {% endif %}
