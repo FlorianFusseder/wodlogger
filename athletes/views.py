@@ -18,10 +18,8 @@ class DetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = get_user(self.request)
-        current_athlete_id = Athlete.objects.get(user_id=user.id).id
         view_athlete_id = kwargs['object'].id
-        context['scores'] = Score.objects.filter(athlete_id=current_athlete_id) \
+        context['scores'] = Score.objects.filter(athlete_id=view_athlete_id) \
                                 .order_by('-logging_date')[:25]
         context['workouts'] = Workout.objects.filter(creator_id=view_athlete_id) \
                                   .order_by('-date')[:25]
