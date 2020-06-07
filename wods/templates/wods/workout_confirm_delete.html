@@ -11,6 +11,8 @@
     TYPE: {{ workout.type }}<br><br>
 
     CREATED AT: {{ workout.date }}<br>
+
+    <h2>If you do this, all you scores for this workout are deleted as well!</h2>
     <p>
     <form method="post" action="{% url 'wods:delete' workout.id %}">
         {% csrf_token %}
