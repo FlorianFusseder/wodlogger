@@ -40,6 +40,17 @@ class CreateView(LoginRequiredMixin, generic.CreateView):
 class UpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Workout
     form_class = WorkoutForm
+    template_name = 'wods/workout_update.html'
+
+    def get_object(self, queryset=None):
+        obj = super(UpdateView, self).get_object()
+        if not obj.creator.id == get_user(self.request).athlete.id:
+            raise Http404
+
+        if Score.objects.filter(workout_id=obj.id).exclude(athlete_id=obj.creator.id).exists():
+            return None
+
+        return obj
 
 
 class DeleteView(LoginRequiredMixin, generic.DeleteView):

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log a Workout</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+    {% if workout %}
+        <h1>Edit Workout</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save">
+        </form>
+    {% else %}
+        <h1>This workout has scores by other people so you cannot edit it!</h1>
+    {% endif %}
+{% else %}
+    <p><a href="{% url 'login' %}">Login</a> to edit this workout</p>
+{% endif %}
+
+</body>
+</html>
