@@ -14,8 +14,11 @@ User Name: {{ athlete.user.username }}<br>
     Last Name:    {{ athlete.last_name }}<br>
 {% endif %}
 
-
-<h3>Your Scores</h3>
+{% if athlete.id == user.athlete.id %}
+    <h3>Your Scores</h3>
+{% else %}
+    <h3>Scores</h3>
+{% endif %}
 {% if scores %}
     <ul>
         {% for score in scores %}
@@ -24,16 +27,23 @@ User Name: {{ athlete.user.username }}<br>
         {% endfor %}
     </ul>
 {% else %}
-    No scores logged until now! Get going by
-    <a href="{% url 'wods:create' %}">creating a new workout</a>
-    or
-    <a href="{% url 'wods:index' %}">add a score</a>
-    for an existing workout
+    {% if athlete.id == user.athlete.id %}
+        You have scores no logged until now! Get going by
+        <a href="{% url 'wods:create' %}">creating a new workout</a>
+        or
+        <a href="{% url 'wods:index' %}">add a score</a>
+        for an existing workout
+    {% else %}
+        Athlete did not add scores yet
+    {% endif %}
 {% endif %}
 
-<br><br>
-
-<h3>Your Workouts</h3>
+<br>
+{% if athlete.id == user.athlete.id %}
+    <h3>Your Workouts</h3>
+{% else %}
+    <h3>Workouts</h3>
+{% endif %}
 {% if workouts %}
     <ul>
         {% for workout in workouts %}
@@ -42,7 +52,13 @@ User Name: {{ athlete.user.username }}<br>
         {% endfor %}
     </ul>
 {% else %}
-    No workouts created until now! <a href="{% url 'wods:create' %}">Create a new workout</a>
+    {% if athlete.id == user.athlete.id %}
+        No workouts created yet.
+        <a href="{% url 'wods:create' %}">Create a new workout</a>
+    {% else %}
+        Athlete has not yet created a workout
+    {% endif %}
+
 {% endif %}
 
 </body>
