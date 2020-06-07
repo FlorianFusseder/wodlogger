@@ -23,6 +23,7 @@ SCORE: {{ score.score }}<br>
 
 {% if score.athlete.user == user %}
     <a href="{% url 'score:update' score.id %}"><input type="submit" value="edit score"/></a>
+    <a href="{% url 'score:delete' score.id %}"><input type="submit" value="delete score"/></a>
 {% endif %}
 <a href="{% url 'wods:detail' score.workout_id %}"><input type="submit" value="view wod"/></a>
 </body>
