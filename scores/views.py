@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.views import generic
@@ -18,12 +19,18 @@ class DetailView(generic.DetailView):
     model = Score
 
 
-class UpdateView(generic.UpdateView):
+class UpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Score
     form_class = ScoreForm
 
+    def get_object(self, queryset=None):
+        obj = super(UpdateView, self).get_object()
+        if not obj.athlete.id == get_user(self.request).athlete.id:
+            raise HttpResponseForbidden
+        return obj
 
-class DeleteView(generic.DeleteView):
+
+class DeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Score
     success_url = reverse_lazy('score:index')
 

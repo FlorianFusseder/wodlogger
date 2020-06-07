@@ -1,4 +1,7 @@
 from django.contrib.auth import get_user
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
+from django.urls import reverse_lazy
 from django.views import generic
 
 from athletes.models import Athlete
@@ -23,7 +26,7 @@ class DetailView(generic.DetailView):
         return context
 
 
-class CreateView(generic.edit.CreateView):
+class CreateView(LoginRequiredMixin, generic.CreateView):
     model = Workout
     form_class = WorkoutForm
 
@@ -34,7 +37,23 @@ class CreateView(generic.edit.CreateView):
         return super().form_valid(form)
 
 
-class AddScoreView(generic.UpdateView):
+class UpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Workout
+    form_class = WorkoutForm
+
+
+class DeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Workout
+    success_url = reverse_lazy('wods:index')
+
+    def get_object(self, queryset=None):
+        obj = super(DeleteView, self).get_object()
+        if not obj.creator.id == get_user(self.request).athlete.id:
+            raise Http404
+        return obj
+
+
+class AddScoreView(LoginRequiredMixin, generic.UpdateView):
     model = Workout
     context_object_name = 'workout'
     form_class = AddScoreForm

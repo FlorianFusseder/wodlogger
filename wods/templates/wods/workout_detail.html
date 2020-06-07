@@ -7,13 +7,14 @@
 <body>
 <h1>Workout</h1>
 CREATED BY:
-<a href="{% url 'athletes:detail' user.athlete.id %}">
-    {% if workout.creator.id == user.athlete.id %}
-        You
-    {% else %}
-        {{ workout.creator.get_signature }}
-    {% endif %}
-</a>
+
+{% if workout.creator.id == user.athlete.id %}
+    <a href="{% url 'athletes:detail' user.athlete.id %}">You</a><br>
+    <a href="{% url 'wods:update' workout.id %}"><input type="submit" value="edit workout"/></a>
+    <a href="{% url 'wods:delete' workout.id %}"><input type="submit" value="delete workout"/></a>
+{% else %}
+    <a href="{% url 'athletes:detail' user.athlete.id %}">{{ workout.creator.get_signature }}</a>
+{% endif %}
 <br><br>
 AT: {{ workout.date }}<br>
 

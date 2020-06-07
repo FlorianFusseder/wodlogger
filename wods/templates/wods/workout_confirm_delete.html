@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deletion Successful</title>
+</head>
+<body>
+<h3>You really want to delete this Workout?</h3>
+DESC: {{ workout.description }}<br>
+TYPE: {{ workout.type }}<br><br>
+
+CREATED AT: {{ workout.date }}<br>
+<p>
+<form method="post" action="{% url 'wods:delete' workout.id %}">
+    {% csrf_token %}
+    <button type="submit">
+        delete workout
+    </button>
+</form>
+</p>
+</body>
+</html>

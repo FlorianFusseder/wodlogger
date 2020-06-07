@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 
 from athletes.models import Athlete
@@ -26,7 +27,7 @@ class DetailView(generic.DetailView):
         return context
 
 
-class UpdateView(generic.UpdateView):
+class UpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Athlete
     fields = ['first_name', 'last_name']
 
