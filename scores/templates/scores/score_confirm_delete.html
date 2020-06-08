@@ -1,22 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Deletion Successful</title>
-</head>
-<body>
-<h3>You really want to delete this score?</h3>
-DESC: {{ score.workout.description }}<br>
-SCORE: {{ score.score }}<br><br>
+{% extends 'base/base-breadcrums.html' %}
 
-FROM: {{ score.execution_date }}<br>
-<p>
-<form method="post" action="{% url 'score:delete' score.id %}">
-    {% csrf_token %}
-    <button type="submit">
-        delete score
-    </button>
-</form>
-</p>
-</body>
-</html>
+{% block title %}Confirm Deletion{% endblock %}
+{% block title-header %}Confirm Deletion{% endblock %}
+
+{% block content %}
+
+    <h3>You really want to delete this score?</h3>
+    DESC: {{ score.workout.description }}<br>
+    SCORE: {{ score.score }}<br><br>
+
+    FROM: {{ score.execution_date }}<br>
+
+    <form method="post" action="{% url 'score:delete' score.id %}">
+        {% csrf_token %}
+        <button type="submit">
+            delete score
+        </button>
+    </form>
+
+{% endblock %}

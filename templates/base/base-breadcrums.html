@@ -1,0 +1,11 @@
+{% extends 'base/base.html' %}
+
+{% block breadcrums %}
+    <a href="{% url 'wods:create' %}"><input type="submit" value="Create workout"/></a>
+    <a href="{% url 'wods:index' %}"><input type="submit" value="Look at workouts"/></a>
+    <a href="{% url 'score:index' %}"><input type="submit" value="Look at scores"/></a>
+    <a href="{% url 'athletes:index' %}"><input type="submit" value="Look at athletes"/></a>
+    <a href="{% url 'athletes:detail' user.athlete.id %}"><input type="submit" value="View your activity log"/></a>
+    <a href="{% url 'profiles:profile' %}"><input type="submit" value="Your profile"/></a>
+    <a href="{% url 'logout' %}"><input type="submit" value="Logout"/></a>
+{% endblock %}

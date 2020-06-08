@@ -1,29 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Deletion Successful</title>
-</head>
-<body>
-{% if workout %}
-    <h3>You really want to delete this Workout?</h3>
-    DESC: {{ workout.description }}<br>
-    TYPE: {{ workout.type }}<br><br>
+{% extends 'base/base-breadcrums.html' %}
 
-    CREATED AT: {{ workout.date }}<br>
+{% block title %}Deletion Successful{% endblock %}
 
-    <h2>If you do this, all you scores for this workout are deleted as well!</h2>
-    <p>
-    <form method="post" action="{% url 'wods:delete' workout.id %}">
-        {% csrf_token %}
-        <button type="submit">
-            delete workout
-        </button>
-    </form>
-    </p>
-{% else %}
-    <h1>This workout has scores by other people so you cannot delete it!</h1>
-{% endif %}
+{% block content %}
 
-</body>
-</html>
+    {% if workout %}
+        <h3>You really want to delete this Workout?</h3>
+        DESC: {{ workout.description }}<br>
+        TYPE: {{ workout.type }}<br><br>
+
+        CREATED AT: {{ workout.date }}<br>
+
+        <h2>If you do this, all you scores for this workout are deleted as well!</h2>
+        <p>
+        <form method="post" action="{% url 'wods:delete' workout.id %}">
+            {% csrf_token %}
+            <button type="submit">
+                delete workout
+            </button>
+        </form>
+        </p>
+    {% else %}
+        <h1>This workout has scores by other people so you cannot delete it!</h1>
+    {% endif %}
+{% endblock %}

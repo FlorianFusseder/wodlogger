@@ -1,30 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Score</title>
-</head>
-<body>
-<h1>Score</h1>
-ATHLETE:
-<a href="{% url 'athletes:detail' user.athlete.id %}">
+{% extends 'base/base-breadcrums.html' %}
+
+{% block title %}Score details{% endblock %}
+{% block title-header %}Score details{% endblock %}
+
+{% block content %}
+    ATHLETE:
+    <a href="{% url 'athletes:detail' user.athlete.id %}">
+        {% if score.athlete.user == user %}
+            You
+        {% else %}
+            {{ score.athlete.get_signature }}
+        {% endif %}
+    </a>
+
+    <br><br>
+    AT: {{ score.execution_date }}<br>
+
+    DESC: {{ score.workout.description }}<br>
+    SCORE: {{ score.score }}<br>
+
     {% if score.athlete.user == user %}
-        You
-    {% else %}
-        {{ score.athlete.get_signature }}
+        <a href="{% url 'score:update' score.id %}"><input type="submit" value="edit score"/></a>
+        <a href="{% url 'score:delete' score.id %}"><input type="submit" value="delete score"/></a>
     {% endif %}
-</a>
-
-<br><br>
-AT: {{ score.execution_date }}<br>
-
-DESC: {{ score.workout.description }}<br>
-SCORE: {{ score.score }}<br>
-
-{% if score.athlete.user == user %}
-    <a href="{% url 'score:update' score.id %}"><input type="submit" value="edit score"/></a>
-    <a href="{% url 'score:delete' score.id %}"><input type="submit" value="delete score"/></a>
-{% endif %}
-<a href="{% url 'wods:detail' score.workout_id %}"><input type="submit" value="view wod"/></a>
-</body>
-</html>
+    <a href="{% url 'wods:detail' score.workout_id %}"><input type="submit" value="view wod"/></a>
+{% endblock content %}

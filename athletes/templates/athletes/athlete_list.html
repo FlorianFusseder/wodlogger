@@ -1,28 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Workout-List</title>
-</head>
-<body>
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'athletes/style.css' %}">
-{% if athlete_list %}
-    <ul>
-        {% for athlete in athlete_list %}
-            <li>
-                <a href="{% url 'athletes:detail' athlete.id %}">{{ athlete.user.username }}</a>
-                {% if athlete.first_name %}
-                    {{ athlete.first_name }}
-                {% endif %}
-                {% if athlete.last_name %}
-                    {{ athlete.last_name }}
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No Athletes are available.</p>
-{% endif %}
-</body>
-</html>
+{% extends 'base/base-breadcrums.html' %}
+
+{% block title %}Athlete List{% endblock %}
+{% block title-header %}Athlete List{% endblock %}
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'athletes/style.css' %}">
+    {% if athlete_list %}
+        <ul>
+            {% for athlete in athlete_list %}
+                <li>
+                    <a href="{% url 'athletes:detail' athlete.id %}">{{ athlete.user.username }}</a>
+                    {% if athlete.first_name %}
+                        {{ athlete.first_name }}
+                    {% endif %}
+                    {% if athlete.last_name %}
+                        {{ athlete.last_name }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No Athletes are available.</p>
+    {% endif %}
+{% endblock %}

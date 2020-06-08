@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Update Athlete</title>
-</head>
-<body>
-<h1>Update Athlete</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Update">
-</form>
-</body>
-</html>
+{% extends 'base/base-breadcrums.html' %}
+
+{% block title %}Athlete{% endblock %}
+{% block title-header %}Athlete info{% endblock %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Update">
+    </form>
+{% endblock %}

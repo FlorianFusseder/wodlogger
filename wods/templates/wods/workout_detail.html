@@ -1,36 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Workout</title>
-</head>
-<body>
-<h1>Workout</h1>
-CREATED BY:
+{% extends 'base/base-breadcrums.html' %}
 
-{% if workout.creator.id == user.athlete.id %}
-    <a href="{% url 'athletes:detail' user.athlete.id %}">You</a><br>
-    <a href="{% url 'wods:update' workout.id %}"><input type="submit" value="edit workout"/></a>
-    <a href="{% url 'wods:delete' workout.id %}"><input type="submit" value="delete workout"/></a>
-{% else %}
-    <a href="{% url 'athletes:detail' user.athlete.id %}">{{ workout.creator.get_signature }}</a>
-{% endif %}
-<br><br>
-AT: {{ workout.date }}<br>
+{% block title %}Workout details{% endblock %}
 
-DESC: {{ workout.description }}<br>
-<br>
-SCORES:
-{% if scores %}
-    <ul>
-        {% for score in scores %}
-            <li><a href="{% url 'score:detail' score.id %}">{{ score.score }}
-                from {{ score.date }}</a>
-                by
-                <a href="{% url 'athletes:detail' user.athlete.id %}">{{ score.athlete.get_signature }}</a></li>
-        {% endfor %}
-    </ul>
-{% endif %}
-<a href="{% url 'wods:add_score' workout.id %}">Log a score</a> for this workout
-</body>
-</html>
+{% block content %}
+    <h1>Workout details</h1>
+    <p>
+        CREATED BY:
+        {% if workout.creator.id == user.athlete.id %}
+            <a href="{% url 'athletes:detail' user.athlete.id %}">You</a>
+        {% else %}
+            <a href="{% url 'athletes:detail' user.athlete.id %}">{{ workout.creator.get_signature }}</a>
+        {% endif %}
+        <br>
+        AT: {{ workout.date }}<br>
+    </p>
+
+    DESC: {{ workout.description }}
+    {% if workout.creator.id == user.athlete.id %}
+        <p>
+            <a href="{% url 'wods:update' workout.id %}"><input type="submit" value="edit workout"/></a>
+            <a href="{% url 'wods:delete' workout.id %}"><input type="submit" value="delete workout"/></a>
+        </p>
+    {% endif %}
+    <p>
+        SCORES:
+        {% if scores %}
+            <ul>
+                {% for score in scores %}
+                    <li><a href="{% url 'score:detail' score.id %}">{{ score.score }}
+                        from {{ score.date }}</a>
+                        by
+                        <a href="{% url 'athletes:detail' user.athlete.id %}">{{ score.athlete.get_signature }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <br>No scores yet! Be the first!
+        {% endif %}
+    </p>
+    <a href="{% url 'wods:add_score' workout.id %}"><input type="submit" value="Log a score"/></a>
+{% endblock %}

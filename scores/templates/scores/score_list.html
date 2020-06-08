@@ -1,30 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Score-List</title>
-</head>
-<body>
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'wods/style.css' %}">
-{% if score_list %}
-    <ul>
-        {% for score in score_list %}
-            <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.description }} at {{ score.score }}
-                from {{ score.execution_date }}</a> by
-                <a href="{% url 'athletes:detail' score.athlete.id %}">
-                    {% if score.athlete.user == user %}
-                        You
-                    {% else %}
-                        {{ score.athlete.get_signature }}
-                    {% endif %}
-                </a>
-                ( {{ score.logging_date }} )
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No Scores are available.</p>
-{% endif %}
-</body>
-</html>
+{% extends 'base/base-breadcrums.html' %}
+
+{% block title %}Score List{% endblock %}
+{% block title-header %}Score List{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wods/style.css' %}">
+    {% if score_list %}
+        <ul>
+            {% for score in score_list %}
+                <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.description }} at {{ score.score }}
+                    from {{ score.execution_date }}</a> by
+                    <a href="{% url 'athletes:detail' score.athlete.id %}">
+                        {% if score.athlete.user == user %}
+                            You
+                        {% else %}
+                            {{ score.athlete.get_signature }}
+                        {% endif %}
+                    </a>
+                    ( {{ score.logging_date }} )
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No Scores are available.</p>
+    {% endif %}
+{% endblock %}

@@ -1,10 +1,10 @@
-{% extends 'base/base.html' %}
+{% extends 'base/base-breadcrums.html' %}
 
-{% block title %}Profil{% endblock %}
-
+{% block title %}Profile{% endblock %}
+{% block title-header %}Welcome!{% endblock %}
 {% block content %}
     {% if user.is_authenticated %}
-        <h1>Welcome!</h1>
+
         <h2>Your Athlete Profile:</h2>
         User Name:  {{ user.username }}<br>
         {% if user.athlete.first_name %}
@@ -15,19 +15,6 @@
         {% endif %}
 
         <p>
-            <a href="{% url 'logout' %}"><input type="submit" value="logout"/></a>
-        </p>
-        <p>
-            <a href="{% url 'wods:index' %}"><input type="submit" value="look at wods"/></a>
-            <a href="{% url 'wods:create' %}"><input type="submit" value="create a wod"/></a>
-        </p>
-        <p>
-            <a href="{% url 'score:index' %}"><input type="submit" value="look at scores"/></a>
-        </p>
-        <p>
-            <a href="{% url 'athletes:detail' user.athlete.id %}"><input type="submit"
-                                                                         value="view your activities"/></a>
-            <a href="{% url 'athletes:index' %}"><input type="submit" value="look at athletes"/></a>
             <a href="{% url 'athletes:update' %}"><input type="submit" value="edit your athlete profile"/></a>
         </p>
 

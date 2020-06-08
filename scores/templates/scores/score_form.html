@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Log a Score</title>
-</head>
-<body>
-{% if user.is_authenticated %}
-    <h1>Log a Score</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save">
-    </form>
-{% else %}
-    <p><a href="{% url 'login' %}">Login</a> to log a score</p>
-{% endif %}
-</body>
-</html>
+{% extends 'base/base-breadcrums.html' %}
+
+{% block title %}Score info{% endblock %}
+{% block title-header %}Score info{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Log a Score</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save">
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Login</a> to log a score</p>
+    {% endif %}
+{% endblock %}

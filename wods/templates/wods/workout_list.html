@@ -1,23 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Workout-List</title>
-</head>
-<body>
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'wods/style.css' %}">
-{% if workout_list %}
-    <ul>
-        {% for workout in workout_list %}
-            <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.description }} {{ workout.score_type }}
-                from {{ workout.date }}</a>
-                by
-                <a href="{% url 'athletes:detail' user.athlete.id %}">{{ workout.creator.get_signature }}</a></li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No Workouts are available.</p>
-{% endif %}
-</body>
-</html>
+{% extends 'base/base-breadcrums.html' %}
+
+{% block title %}Workout List{% endblock %}
+{% block title-header %}Workout List{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wods/style.css' %}">
+    {% if workout_list %}
+        <ul>
+            {% for workout in workout_list %}
+                <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.description }} {{ workout.score_type }}
+                    from {{ workout.date }}</a>
+                    by
+                    <a href="{% url 'athletes:detail' user.athlete.id %}">{{ workout.creator.get_signature }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No Workouts are available.</p>
+    {% endif %}
+{% endblock %}
