@@ -57,4 +57,4 @@ class DataFilledAthleteView(TestCase):
         self.assertContains(response, "first_name2")
         self.assertContains(response, "last_name2")
         self.assertContains(response, "AwesomeWod done in 100")
-        self.assertContains(response, "AwesomeWod")
+        self.assertContains(response, "AwesomeWod (FOR_TIME):")

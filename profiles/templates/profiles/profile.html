@@ -6,12 +6,12 @@
     {% if user.is_authenticated %}
         <p>
         <h2>Your Athlete Profile:</h2>
-        User Name:  {{ user.username }}<br>
+        User Name: {{ user.username }}<br>
         {% if user.athlete.first_name %}
             First Name: {{ user.athlete.first_name }}<br>
         {% endif %}
         {% if user.athlete.last_name %}
-            Last Name:    {{ user.athlete.last_name }}<br>
+            Last Name: {{ user.athlete.last_name }}<br>
         {% endif %}
         </p>
         <p>
@@ -22,8 +22,8 @@
         {% if scores %}
             <ul>
                 {% for score in scores %}
-                    <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.description }} in {{ score.score }}
-                        from {{ score.execution_date }} ( {{ score.logging_date }} )</a></li>
+                    <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.name }} done in {{ score.score }}
+                        from {{ score.execution_date }} ( created {{ score.logging_date }} )</a></li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -40,9 +40,8 @@
         {% if workouts %}
             <ul>
                 {% for workout in workouts %}
-                    <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.type }}: {{ workout.description }}
-                        created
-                        at {{ workout.date }}</a></li>
+                    <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.name }} ({{ workout.type }}):
+                        {{ workout.description }} created at {{ workout.date }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
