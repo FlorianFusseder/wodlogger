@@ -14,8 +14,8 @@
     {% if scores %}
         <ul>
             {% for score in scores %}
-                <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.description }} in {{ score.score }}
-                    from {{ score.execution_date }} ( {{ score.logging_date }} )</a></li>
+                <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.name }} done in {{ score.score }}
+                    from {{ score.execution_date }} ( created: {{ score.logging_date }} )</a></li>
             {% endfor %}
         </ul>
     {% else %}

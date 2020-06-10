@@ -23,7 +23,7 @@ class DataFilledAthleteView(TestCase):
         user2 = User.objects.create_user(username="user_name2")
         athlete = Athlete.objects.create(first_name="first_name2", last_name="last_name2", user=user2)
         awesome_wod = Workout.objects.create(name="AwesomeWod", creator=athlete)
-        Score.objects.create(athlete=athlete, workout=awesome_wod, comment='AwesomeScore')
+        Score.objects.create(athlete=athlete, workout=awesome_wod, score="100")
 
     def test_athletes_list(self):
         response = self.client.get('/athletes/')
@@ -56,5 +56,5 @@ class DataFilledAthleteView(TestCase):
         self.assertContains(response, "user_name2")
         self.assertContains(response, "first_name2")
         self.assertContains(response, "last_name2")
-        self.assertContains(response, "AwesomeScore")
+        self.assertContains(response, "AwesomeWod done in 100")
         self.assertContains(response, "AwesomeWod")
