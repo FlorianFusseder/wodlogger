@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 
@@ -20,10 +19,8 @@ class DetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         view_athlete_id = kwargs['object'].id
-        context['scores'] = Score.objects.filter(athlete_id=view_athlete_id) \
-                                .order_by('-logging_date')[:25]
-        context['workouts'] = Workout.objects.filter(creator_id=view_athlete_id) \
-                                  .order_by('-date')[:25]
+        context['scores'] = Score.objects.filter(athlete_id=view_athlete_id).order_by('-logging_date')[:25]
+        context['workouts'] = Workout.objects.filter(creator_id=view_athlete_id).order_by('-date')[:25]
         return context
 
 

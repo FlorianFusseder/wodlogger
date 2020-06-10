@@ -6,6 +6,7 @@ from athletes.models import Athlete
 
 
 class Workout(models.Model):
+    name = models.CharField(max_length=200)
     description = models.TextField(default='')
     creator = models.ForeignKey(Athlete, on_delete=models.CASCADE)
     date = models.DateTimeField(default=django.utils.timezone.now)
@@ -23,4 +24,4 @@ class Workout(models.Model):
         return reverse('wods:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return f"Workout [ workout_description: {self.description}, type: {self.type} athlete: {self.creator}, date: {self.date} ]"
+        return f"Workout [ name: {self.name}, workout_description: {self.description}, type: {self.type} athlete: {self.creator}, date: {self.date} ]"

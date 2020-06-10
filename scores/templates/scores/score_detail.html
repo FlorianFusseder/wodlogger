@@ -4,21 +4,27 @@
 {% block title-header %}Score details{% endblock %}
 
 {% block content %}
-    ATHLETE:
-    <a href="{% url 'athletes:detail' user.athlete.id %}">
-        {% if score.athlete.user == user %}
-            You
-        {% else %}
-            {{ score.athlete.get_signature }}
+    <p>
+        ATHLETE:
+        <a href="{% url 'athletes:detail' user.athlete.id %}">
+            {% if score.athlete.user == user %}
+                You
+            {% else %}
+                {{ score.athlete.get_signature }}
+            {% endif %}
+        </a>
+    </p>
+    <p>
+        AT: {{ score.execution_date }}<br>
+        WORKOUT: {{ score.workout.name }}<br>
+        DESC: {{ score.workout.description }}<br>
+    </p>
+    <p>
+        SCORE: {{ score.score }}<br>
+        {% if score.comment %}
+            COMMENT: {{ score.comment }}
         {% endif %}
-    </a>
-
-    <br><br>
-    AT: {{ score.execution_date }}<br>
-
-    DESC: {{ score.workout.description }}<br>
-    SCORE: {{ score.score }}<br>
-
+    </p>
     {% if score.athlete.user == user %}
         <a href="{% url 'score:update' score.id %}"><input type="submit" value="edit score"/></a>
         <a href="{% url 'score:delete' score.id %}"><input type="submit" value="delete score"/></a>

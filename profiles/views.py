@@ -5,6 +5,8 @@ from django.views import generic
 
 from athletes.models import Athlete
 from profiles.forms import CustomUserCreationForm
+from scores.models import Score
+from wods.models import Workout
 
 
 class SignUp(generic.CreateView):
@@ -20,3 +22,18 @@ class SignUp(generic.CreateView):
         user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'], )
         login(self.request, user)
         return HttpResponseRedirect(reverse('profiles:profile'))
+
+
+class ProfileView(generic.DetailView):
+    template_name = 'profiles/profile.html'
+
+    def get_object(self, queryset=None):
+        athlete = Athlete.objects.get(user__username=self.request.user.username)
+        return athlete
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        view_athlete_id = kwargs['object'].id
+        context['scores'] = Score.objects.filter(athlete_id=view_athlete_id).order_by('-logging_date')[:25]
+        context['workouts'] = Workout.objects.filter(creator_id=view_athlete_id).order_by('-date')[:25]
+        return context

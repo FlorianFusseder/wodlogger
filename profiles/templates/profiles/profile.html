@@ -4,7 +4,7 @@
 {% block title-header %}Welcome!{% endblock %}
 {% block content %}
     {% if user.is_authenticated %}
-
+        <p>
         <h2>Your Athlete Profile:</h2>
         User Name:  {{ user.username }}<br>
         {% if user.athlete.first_name %}
@@ -13,9 +13,42 @@
         {% if user.athlete.last_name %}
             Last Name:    {{ user.athlete.last_name }}<br>
         {% endif %}
-
+        </p>
         <p>
             <a href="{% url 'athletes:update' %}"><input type="submit" value="edit your athlete profile"/></a>
+        </p>
+        <p>
+        <h3>Your Scores</h3>
+        {% if scores %}
+            <ul>
+                {% for score in scores %}
+                    <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.description }} in {{ score.score }}
+                        from {{ score.execution_date }} ( {{ score.logging_date }} )</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            You have scores no logged until now!<br> Get going by
+            <a href="{% url 'wods:create' %}">creating a new workout</a>
+            and adding a score, or
+            <a href="{% url 'wods:index' %}">add a score</a>
+            to an existing workout
+        {% endif %}
+        </p>
+
+        <p>
+        <h3>Your Workouts</h3>
+        {% if workouts %}
+            <ul>
+                {% for workout in workouts %}
+                    <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.type }}: {{ workout.description }}
+                        created
+                        at {{ workout.date }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            Athlete has not yet created a workout! Get going by
+            <a href="{% url 'wods:create' %}">creating a new workout</a>!
+        {% endif %}
         </p>
 
     {% else %}
