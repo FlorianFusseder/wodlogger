@@ -1,11 +1,12 @@
 {% extends 'base/base-breadcrums.html' %}
 
-{% block title %}Deletion Successful{% endblock %}
+{% block title %}Confirm Deletion{% endblock %}
+{% block title-header %}Confirm Deletion{% endblock %}
 
 {% block content %}
 
     {% if workout %}
-        <h3>You really want to delete this Workout?</h3>
+        <h3>Do you really want to delete this Workout?</h3>
         DESC: {{ workout.description }}<br>
         TYPE: {{ workout.type }}<br><br>
 

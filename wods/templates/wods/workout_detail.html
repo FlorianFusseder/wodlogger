@@ -4,20 +4,16 @@
 
 {% block content %}
     <h1>Workout details</h1>
-    <p>
     <h3>{{ workout.name }}</h3>
+    <p>
         CREATED BY:
-        {% if workout.creator.id == user.athlete.id %}
-            <a href="{% url 'athletes:detail' user.athlete.id %}">You</a>
-        {% else %}
-            <a href="{% url 'athletes:detail' user.athlete.id %}">{{ workout.creator.get_signature }}</a>
-        {% endif %}
+        <a href="{% url 'athletes:detail' workout.creator.id %}">{{ workout.creator.get_signature }}</a>
         <br>
         AT: {{ workout.date }}<br>
     </p>
 
     DESC: {{ workout.description }}
-    {% if workout.creator.id == user.athlete.id %}
+    {% if workout.creator.user == user %}
         <p>
             <a href="{% url 'wods:update' workout.id %}"><input type="submit" value="edit workout"/></a>
             <a href="{% url 'wods:delete' workout.id %}"><input type="submit" value="delete workout"/></a>
@@ -31,7 +27,8 @@
                     <li><a href="{% url 'score:detail' score.id %}">{{ score.score }}
                         from {{ score.date }}</a>
                         by
-                        <a href="{% url 'athletes:detail' user.athlete.id %}">{{ score.athlete.get_signature }}</a></li>
+                        <a href="{% url 'athletes:detail' score.athlete.id %}">{{ score.athlete.get_signature }}</a>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}

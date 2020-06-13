@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404
+from django.http import HttpResponseForbidden, HttpResponseNotAllowed
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -8,6 +8,12 @@ from athletes.models import Athlete
 from scores.models import Score
 from wods.forms import WorkoutForm, AddScoreForm
 from wods.models import Workout
+
+
+class HttpResponseNotAllowedException(HttpResponseNotAllowed, Exception):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__("Update/Delete only allowed if no data from other users is logged", *args, **kwargs)
 
 
 class IndexView(generic.ListView):
@@ -45,10 +51,13 @@ class UpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_object(self, queryset=None):
         obj = super(UpdateView, self).get_object()
         if not obj.creator.id == get_user(self.request).athlete.id:
-            raise Http404
+            raise HttpResponseForbidden
 
         if Score.objects.filter(workout_id=obj.id).exclude(athlete_id=obj.creator.id).exists():
-            return None
+            if self.request.method == 'GET':
+                return None
+            else:
+                raise HttpResponseNotAllowedException
 
         return obj
 
@@ -60,10 +69,13 @@ class DeleteView(LoginRequiredMixin, generic.DeleteView):
     def get_object(self, queryset=None):
         obj = super(DeleteView, self).get_object()
         if not obj.creator.id == get_user(self.request).athlete.id:
-            raise Http404
+            raise HttpResponseForbidden
 
         if Score.objects.filter(workout_id=obj.id).exclude(athlete_id=obj.creator.id).exists():
-            return None
+            if self.request.method == 'GET':
+                return None
+            else:
+                raise HttpResponseNotAllowedException
 
         return obj
 

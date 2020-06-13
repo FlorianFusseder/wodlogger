@@ -28,7 +28,7 @@ class SetupScoreData(ABC, TestCase):
 
 class NoDataScoreView(TestCase):
 
-    def test_athletes_list(self):
+    def test_scores_list(self):
         response = self.client.get('/scores/')
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No Scores are available.")
