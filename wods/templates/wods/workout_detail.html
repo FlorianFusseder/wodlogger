@@ -5,6 +5,7 @@
 {% block content %}
     <h1>Workout details</h1>
     <p>
+    <h3>{{ workout.name }}</h3>
         CREATED BY:
         {% if workout.creator.id == user.athlete.id %}
             <a href="{% url 'athletes:detail' user.athlete.id %}">You</a>

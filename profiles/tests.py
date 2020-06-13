@@ -9,7 +9,15 @@ profile_url = "/profile/"
 signup_url = profile_url + "signup/"
 
 
-class ProfileView(TestCase):
+class ProfileViewNotLoggedIn(TestCase):
+
+    def test_profile_data_contained(self):
+        response = self.client.get(profile_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "You are not logged in")
+
+
+class ProfileViewLoggedIn(TestCase):
 
     def setUp(self):
         response = self.client.post(signup_url,

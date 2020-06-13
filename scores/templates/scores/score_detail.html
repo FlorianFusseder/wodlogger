@@ -6,7 +6,7 @@
 {% block content %}
     <p>
         ATHLETE:
-        <a href="{% url 'athletes:detail' user.athlete.id %}">
+        <a href="{% url 'athletes:detail' score.athlete.id %}">
             {% if score.athlete.user == user %}
                 You
             {% else %}
@@ -16,7 +16,7 @@
     </p>
     <p>
         AT: {{ score.execution_date }}<br>
-        WORKOUT: {{ score.workout.name }}<br>
+        WORKOUT: <a href="{% url 'wods:detail' score.workout.id %}">{{ score.workout.name }}</a><br>
         DESC: {{ score.workout.description }}<br>
     </p>
     <p>
@@ -29,5 +29,4 @@
         <a href="{% url 'score:update' score.id %}"><input type="submit" value="edit score"/></a>
         <a href="{% url 'score:delete' score.id %}"><input type="submit" value="delete score"/></a>
     {% endif %}
-    <a href="{% url 'wods:detail' score.workout_id %}"><input type="submit" value="view wod"/></a>
 {% endblock content %}

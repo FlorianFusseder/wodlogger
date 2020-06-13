@@ -1,7 +1,7 @@
 {% extends 'base/base-breadcrums.html' %}
 
-{% block title %}Score List{% endblock %}
-{% block title-header %}Score List{% endblock %}
+{% block title %}Score list{% endblock %}
+{% block title-header %}Score list{% endblock %}
 
 {% block content %}
     {% load static %}
@@ -9,7 +9,7 @@
     {% if score_list %}
         <ul>
             {% for score in score_list %}
-                <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.description }} at {{ score.score }}
+                <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.name }} at {{ score.score }}
                     from {{ score.execution_date }}</a> by
                     <a href="{% url 'athletes:detail' score.athlete.id %}">
                         {% if score.athlete.user == user %}

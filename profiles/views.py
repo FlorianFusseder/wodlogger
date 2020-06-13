@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -28,12 +29,18 @@ class ProfileView(generic.DetailView):
     template_name = 'profiles/profile.html'
 
     def get_object(self, queryset=None):
-        athlete = Athlete.objects.get(user__username=self.request.user.username)
-        return athlete
+        try:
+            athlete = Athlete.objects.get(user__username=self.request.user.username)
+            return athlete
+        except ObjectDoesNotExist:
+            return None
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        view_athlete_id = kwargs['object'].id
-        context['scores'] = Score.objects.filter(athlete_id=view_athlete_id).order_by('-logging_date')[:25]
-        context['workouts'] = Workout.objects.filter(creator_id=view_athlete_id).order_by('-date')[:25]
-        return context
+        if kwargs['object']:
+            context = super().get_context_data(**kwargs)
+            view_athlete_id = kwargs['object'].id
+            context['scores'] = Score.objects.filter(athlete_id=view_athlete_id).order_by('-logging_date')[:25]
+            context['workouts'] = Workout.objects.filter(creator_id=view_athlete_id).order_by('-date')[:25]
+            return context
+        else:
+            return None

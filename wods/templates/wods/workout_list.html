@@ -12,7 +12,7 @@
                 <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.description }} {{ workout.score_type }}
                     from {{ workout.date }}</a>
                     by
-                    <a href="{% url 'athletes:detail' user.athlete.id %}">{{ workout.creator.get_signature }}</a></li>
+                    <a href="{% url 'athletes:detail' workout.creator.id %}">{{ workout.creator.get_signature }}</a></li>
             {% endfor %}
         </ul>
     {% else %}
