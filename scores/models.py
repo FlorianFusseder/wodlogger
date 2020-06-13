@@ -10,7 +10,7 @@ from wods.models import Workout
 
 class Score(models.Model):
     score = models.CharField(max_length=50)
-    comment = models.TextField(default='')
+    comment = models.TextField(default='', blank=True)
     execution_date = models.DateField(default=datetime.date.today)
     logging_date = models.DateTimeField(default=django.utils.timezone.now)
     athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE)
