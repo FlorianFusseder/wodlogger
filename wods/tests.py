@@ -311,8 +311,44 @@ class UpdateWorkoutViewTest(SetupWorkoutData):
         self.assertRaises(HttpResponseNotAllowedException, self.client.post, delete_url)
 
 
-class CreateWorkoutView(TestCase):
-    pass
+class CreateWorkoutView(SetupWorkoutData):
+
+    def test_create_workout_enforces_login(self):
+        create_url = '/wods/create/'
+        get_create_response = self.client.get(create_url)
+        self.assertRedirects(get_create_response, '/profile/login/?next=/wods/create/')
+
+    def test_create_workout_logged_in(self):
+        # login
+        post = self.client.post('/profile/login/', {'username': self.user1.username, 'password': self.user1.clear_pw, })
+        self.assertRedirects(post, '/profile/')
+
+        # Assert confirm deletion page logic
+        create_url = '/wods/create/'
+        get_create_response = self.client.get(create_url)
+        self.assertEqual(get_create_response.status_code, 200)
+        self.assertContains(get_create_response, "Workout")
+        self.assertContains(get_create_response, "Description:")
+        self.assertContains(get_create_response, "Type:")
+        self.assertContains(get_create_response, "Name:")
+        self.assertContains(get_create_response, '<input type="submit" value="Save">')
+
+        # Assert redirect from confirm deletion page to scores index
+        post_create_response = self.client.post(create_url, {
+            'description': 'wod_description',
+            'type': 'EMOM',
+            'name': 'wod_name',
+        })
+        self.assertTrue(post_create_response.status_code, 302)
+        post_url = post_create_response.get('location')
+        self.assertIn('/wods/', post_url)
+
+        # Assert wod created
+        get_workout_response = self.client.get(post_url)
+        self.assertEqual(get_workout_response.status_code, 200)
+        self.assertContains(get_workout_response, 'wod_description')
+        self.assertContains(get_workout_response, 'EMOM')
+        self.assertContains(get_workout_response, 'wod_name')
 
 
 class AddScoreToWorkoutView(SetupWorkoutData):

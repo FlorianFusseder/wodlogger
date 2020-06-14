@@ -13,6 +13,8 @@
     </p>
 
     DESC: {{ workout.description }}
+    <br>
+    TYPE: {{ workout.get_type_display }}
     {% if workout.creator.user == user %}
         <p>
             <a href="{% url 'wods:update' workout.id %}"><input type="submit" value="edit workout"/></a>
