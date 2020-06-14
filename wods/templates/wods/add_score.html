@@ -5,8 +5,9 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-
-        For {{ workout.description }}
+        <p>For: {{ workout.name }}</p>
+        <p>Type: {{ workout.get_type_display }}</p>
+        <p>Description:<br>{{ workout.description }}</p>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}

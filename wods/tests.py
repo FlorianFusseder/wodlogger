@@ -313,7 +313,7 @@ class UpdateWorkoutViewTest(SetupWorkoutData):
 
 class CreateWorkoutView(SetupWorkoutData):
 
-    def test_create_workout_enforces_login(self):
+    def test_get_create_workout_enforces_login(self):
         create_url = '/wods/create/'
         get_create_response = self.client.get(create_url)
         self.assertRedirects(get_create_response, '/profile/login/?next=/wods/create/')
@@ -323,7 +323,6 @@ class CreateWorkoutView(SetupWorkoutData):
         post = self.client.post('/profile/login/', {'username': self.user1.username, 'password': self.user1.clear_pw, })
         self.assertRedirects(post, '/profile/')
 
-        # Assert confirm deletion page logic
         create_url = '/wods/create/'
         get_create_response = self.client.get(create_url)
         self.assertEqual(get_create_response.status_code, 200)
@@ -333,7 +332,6 @@ class CreateWorkoutView(SetupWorkoutData):
         self.assertContains(get_create_response, "Name:")
         self.assertContains(get_create_response, '<input type="submit" value="Save">')
 
-        # Assert redirect from confirm deletion page to scores index
         post_create_response = self.client.post(create_url, {
             'description': 'wod_description',
             'type': 'EMOM',
@@ -350,6 +348,62 @@ class CreateWorkoutView(SetupWorkoutData):
         self.assertContains(get_workout_response, 'EMOM')
         self.assertContains(get_workout_response, 'wod_name')
 
+    def test_post_create_workout_not_logged_in(self):
+        create_url = '/wods/create/'
+        post_create_response = self.client.post(create_url, {
+            'description': 'wod_description',
+            'type': 'EMOM',
+            'name': 'wod_name',
+        })
+        self.assertRedirects(post_create_response, '/profile/login/?next=/wods/create/')
+
 
 class AddScoreToWorkoutView(SetupWorkoutData):
-    pass
+
+    def test_add_score_to_workout_enforces_login(self):
+        add_score_url = f'/wods/{self.wod1.id}/add_score'
+        get_create_response = self.client.get(add_score_url)
+        self.assertRedirects(get_create_response, f'/profile/login/?next={add_score_url}')
+
+    def test_create_workout_logged_in(self):
+        post = self.client.post('/profile/login/', {'username': self.user1.username, 'password': self.user1.clear_pw, })
+        self.assertRedirects(post, '/profile/')
+
+        add_score_url = f'/wods/{self.wod1.id}/add_score'
+        get_add_score_response = self.client.get(add_score_url)
+        self.assertEqual(get_add_score_response.status_code, 200)
+        self.assertContains(get_add_score_response, "Log a Score")
+        self.assertContains(get_add_score_response, "For:")
+        self.assertContains(get_add_score_response, "AwesomeWod1")
+        self.assertContains(get_add_score_response, "Type:")
+        self.assertContains(get_add_score_response, "For Time")
+        self.assertContains(get_add_score_response, "Description:")
+        self.assertContains(get_add_score_response, "Score:")
+        self.assertContains(get_add_score_response, "Execution date:")
+        self.assertContains(get_add_score_response, "Comment:")
+        self.assertContains(get_add_score_response, '<input type="submit" value="Save">')
+
+        post_add_score_response = self.client.post(add_score_url, {
+            'score': 'score_score',
+            'execution_date': '2020-01-01',
+            'name': 'score_comment',
+        })
+        self.assertTrue(post_add_score_response.status_code, 302)
+        post_url = post_add_score_response.get('location')
+        self.assertIn('/wods/', post_url)
+
+        # Assert wod created
+        get_workout_response = self.client.get(post_url)
+        self.assertEqual(get_workout_response.status_code, 200)
+        self.assertContains(get_workout_response, 'score_score')
+        self.assertContains(get_workout_response, 'AwesomeWod1')
+        self.assertContains(get_workout_response, f'{self.user1.last_name}, {self.user1.first_name}')
+        self.assertEqual(1, len(get_workout_response.context_data['scores']))
+
+    def test_post_add_score_to_workout_not_logged_in(self):
+        add_score_url = f'/wods/{self.wod1.id}/add_score'
+        post_add_score_response = self.client.post(add_score_url, {
+            'score': 'score_score',
+            'name': 'score_comment',
+        })
+        self.assertRedirects(post_add_score_response, f'/profile/login/?next={add_score_url}')
