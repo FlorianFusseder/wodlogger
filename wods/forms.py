@@ -7,7 +7,7 @@ from wods.models import Workout
 class WorkoutForm(ModelForm):
     class Meta:
         model = Workout
-        fields = ['name', 'type', 'description', ]
+        fields = ['name', 'workout_type', 'description']
 
 
 class AddScoreForm(ModelForm):

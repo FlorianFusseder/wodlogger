@@ -28,7 +28,7 @@
     {% if workouts %}
         <ul>
             {% for workout in workouts %}
-                <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.name }} ({{ workout.type }}):
+                <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.name }} ({{ workout.workout_type }}):
                     {{ workout.description }} created at {{ workout.date }}</a></li>
             {% endfor %}
         </ul>
