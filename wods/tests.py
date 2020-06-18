@@ -86,8 +86,8 @@ class DataFilledWorkoutViewNotLoggedIn(SetupWorkoutData):
         response = self.client.get(f'/wods/{self.wod1.id}/')
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "edit workout")
-        self.assertContains(response, "delete workout")
+        self.assertContains(response, "update")
+        self.assertContains(response, "delete")
 
     def test_workout_not_editable_if_not_owner(self):
         response = self.client.post('/profile/login/',
@@ -327,10 +327,10 @@ class CreateWorkoutView(SetupWorkoutData):
         get_create_response = self.client.get(create_url)
         self.assertEqual(get_create_response.status_code, 200)
         self.assertContains(get_create_response, "Workout")
-        self.assertContains(get_create_response, "Description:")
-        self.assertContains(get_create_response, "Type:")
-        self.assertContains(get_create_response, "Name:")
-        self.assertContains(get_create_response, '<input type="submit" value="Save">')
+        self.assertContains(get_create_response, "Description")
+        self.assertContains(get_create_response, "Type")
+        self.assertContains(get_create_response, "Name")
+        self.assertContains(get_create_response, 'save')
 
         post_create_response = self.client.post(create_url, {
             'description': 'wod_description',
@@ -365,7 +365,7 @@ class AddScoreToWorkoutView(SetupWorkoutData):
         get_create_response = self.client.get(add_score_url)
         self.assertRedirects(get_create_response, f'/profile/login/?next={add_score_url}')
 
-    def test_create_workout_logged_in(self):
+    def test_add_score_to_workout_logged_in(self):
         post = self.client.post('/profile/login/', {'username': self.user1.username, 'password': self.user1.clear_pw, })
         self.assertRedirects(post, '/profile/')
 
@@ -378,10 +378,10 @@ class AddScoreToWorkoutView(SetupWorkoutData):
         self.assertContains(get_add_score_response, "Type:")
         self.assertContains(get_add_score_response, "For Time")
         self.assertContains(get_add_score_response, "Description:")
-        self.assertContains(get_add_score_response, "Score:")
-        self.assertContains(get_add_score_response, "Execution date:")
-        self.assertContains(get_add_score_response, "Comment:")
-        self.assertContains(get_add_score_response, '<input type="submit" value="Save">')
+        self.assertContains(get_add_score_response, "Score")
+        self.assertContains(get_add_score_response, "Execution date")
+        self.assertContains(get_add_score_response, "Comment")
+        self.assertContains(get_add_score_response, 'save')
 
         post_add_score_response = self.client.post(add_score_url, {
             'score': 'score_score',

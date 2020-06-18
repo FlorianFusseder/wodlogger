@@ -1,4 +1,7 @@
 {% extends "registration/registration_base.html" %}
+{% load materializecss %}
+
+
 {% load i18n %}
 {% block title %}{% trans "Login" %}{% endblock %}
 {% block content %}
@@ -22,11 +25,12 @@
 
         </table>
 
-        <input type="submit" value="{% trans "login" %}"/>
-        <input type="hidden" name="next" value="{{ next }}"/>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Log In
+            <i class="material-icons right">account_circle</i>
+        </button>
+        {#        <input type="hidden" name="next" value="{{ next }}"/>#}
 
         <p>
-            {#                <a href="{{ auth_pwd_reset_url }}">Forgot</a> your password?#}
             <a href="{{ register_url }}">Need an account</a>?
         </p>
 

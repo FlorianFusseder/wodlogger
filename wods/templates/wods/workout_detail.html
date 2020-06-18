@@ -17,8 +17,16 @@
     TYPE: {{ workout.get_type_display }}
     {% if workout.creator.user == user %}
         <p>
-            <a href="{% url 'wods:update' workout.id %}"><input type="submit" value="edit workout"/></a>
-            <a href="{% url 'wods:delete' workout.id %}"><input type="submit" value="delete workout"/></a>
+            <a href="{% url 'wods:update' workout.id %}">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Update
+                    <i class="material-icons right">edit</i>
+                </button>
+            </a>
+            <a href="{% url 'wods:delete' workout.id %}">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Delete
+                    <i class="material-icons right">delete</i>
+                </button>
+            </a>
         </p>
     {% endif %}
     <p>
@@ -37,5 +45,9 @@
             <br>No scores yet! Be the first!
         {% endif %}
     </p>
-    <a href="{% url 'wods:add_score' workout.id %}"><input type="submit" value="Log a score"/></a>
+    <a href="{% url 'wods:add_score' workout.id %}">
+        <button class="btn waves-effect waves-light" type="submit" name="action">log score
+            <i class="material-icons right">add</i>
+        </button>
+    </a>
 {% endblock %}

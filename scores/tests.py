@@ -71,15 +71,15 @@ class DataFilledScoreViewNotLoggedIn(SetupScoreData):
         response = self.client.get(f'/scores/{self.score1.id}/')
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "edit score")
-        self.assertContains(response, "delete score")
+        self.assertContains(response, "edit")
+        self.assertContains(response, "delete")
 
     def test_score_not_editable_if_not_owner(self):
         response = self.client.get(f'/scores/{self.score1.id}/')
 
         self.assertEqual(response.status_code, 200)
-        self.assertNotContains(response, "edit score")
-        self.assertNotContains(response, "delete score")
+        self.assertNotContains(response, "edit")
+        self.assertNotContains(response, "delete")
 
 
 class DeleteScoreViewTest(SetupScoreData):
@@ -195,11 +195,11 @@ class UpdateScoreViewTest(SetupScoreData):
         # Assert confirm update page content
         get_update_response = self.client.get(update_url)
         self.assertEqual(get_update_response.status_code, 200)
-        self.assertContains(get_update_response, "Log a Score")
+        self.assertContains(get_update_response, "Score info")
         self.assertContains(get_update_response,
-                            '<input type="text" name="score" value="100" maxlength="50" required id="id_score">')
-        self.assertContains(get_update_response, '<input type="date" name="execution_date"')
-        self.assertContains(get_update_response, '<textarea name="comment" cols="40" rows="10" id="id_comment">')
+                            'Score')
+        self.assertContains(get_update_response, 'execution_date')
+        self.assertContains(get_update_response, 'Comment')
 
     def test_update_score_if_already_logged_in(self):
         # Assert score does exist
@@ -215,11 +215,10 @@ class UpdateScoreViewTest(SetupScoreData):
         update_url = f'/scores/{self.score1.id}/update'
         get_update_response = self.client.get(update_url)
         self.assertEqual(get_update_response.status_code, 200)
-        self.assertContains(get_update_response, "Log a Score")
-        self.assertContains(get_update_response,
-                            '<input type="text" name="score" value="100" maxlength="50" required id="id_score">')
-        self.assertContains(get_update_response, '<input type="date" name="execution_date"')
-        self.assertContains(get_update_response, '<textarea name="comment" cols="40" rows="10" id="id_comment">')
+        self.assertContains(get_update_response, "Score info")
+        self.assertContains(get_update_response, 'Score')
+        self.assertContains(get_update_response, 'execution_date')
+        self.assertContains(get_update_response, 'Comment')
 
     def test_update_score_if_not_owner(self):
         # Assert score does exist

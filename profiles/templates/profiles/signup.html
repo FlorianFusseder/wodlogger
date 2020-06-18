@@ -1,11 +1,14 @@
 {% extends 'base/base.html' %}
+{% load materializecss %}
 
 {% block title %}Sign Up{% endblock %}
 {% block title-header %}Sign up{% endblock %}
 {% block content %}
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Sign up</button>
+        {{ form|materializecss }}
+        <button class="btn waves-effect waves-light" type="submit" name="action">create
+            <i class="material-icons right">create</i>
+        </button>
     </form>
 {% endblock %}

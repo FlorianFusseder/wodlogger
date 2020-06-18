@@ -1,4 +1,5 @@
 {% extends 'base/base-breadcrums.html' %}
+{% load materializecss %}
 
 {% block title %}Confirm Deletion{% endblock %}
 {% block title-header %}Confirm Deletion{% endblock %}
@@ -13,14 +14,13 @@
         CREATED AT: {{ workout.date }}<br>
 
         <h2>If you do this, all you scores for this workout are deleted as well!</h2>
-        <p>
+
         <form method="post" action="{% url 'wods:delete' workout.id %}">
             {% csrf_token %}
-            <button type="submit">
-                delete workout
+            <button class="btn waves-effect waves-light" type="submit" name="action">delete
+                <i class="material-icons right">delete</i>
             </button>
         </form>
-        </p>
     {% else %}
         <h1>This workout has scores by other people so you cannot delete it!</h1>
     {% endif %}

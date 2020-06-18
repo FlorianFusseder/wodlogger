@@ -1,4 +1,5 @@
 {% extends 'base/base-breadcrums.html' %}
+{% load materializecss %}
 
 {% block title %}Score details{% endblock %}
 {% block title-header %}Score details{% endblock %}
@@ -26,7 +27,15 @@
         {% endif %}
     </p>
     {% if score.athlete.user == user %}
-        <a href="{% url 'score:update' score.id %}"><input type="submit" value="edit score"/></a>
-        <a href="{% url 'score:delete' score.id %}"><input type="submit" value="delete score"/></a>
+        <a href="{% url 'score:update' score.id %}">
+            <button class="btn waves-effect waves-light" type="submit" name="action">update
+                <i class="material-icons right">edit</i>
+            </button>
+        </a>
+        <a href="{% url 'score:delete' score.id %}">
+            <button class="btn waves-effect waves-light" type="submit" name="action">delete
+                <i class="material-icons right">delete</i>
+            </button>
+        </a>
     {% endif %}
 {% endblock content %}

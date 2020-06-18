@@ -1,4 +1,5 @@
 {% extends 'base/base-breadcrums.html' %}
+{% load materializecss %}
 
 {% block title %}Log a Score{% endblock %}
 {% block title-header %}Log a Score{% endblock %}
@@ -10,8 +11,12 @@
         <p>Description:<br>{{ workout.description }}</p>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Save">
+            {{ form.score|materializecss }}
+            {{ form.execution_date}}
+            {{ form.comment|materializecss }}
+            <button class="btn waves-effect waves-light" type="submit" name="action">save
+                <i class="material-icons right">save</i>
+            </button>
         </form>
     {% else %}
         <p><a href="{% url 'login' %}">Login</a> to log a score</p>

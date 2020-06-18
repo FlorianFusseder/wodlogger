@@ -1,4 +1,5 @@
 {% extends 'base/base-breadcrums.html' %}
+{% load materializecss %}
 
 {% block title %}Profile{% endblock %}
 {% block title-header %}Welcome!{% endblock %}
@@ -15,7 +16,11 @@
         {% endif %}
         </p>
         <p>
-            <a href="{% url 'athletes:update' %}"><input type="submit" value="edit your athlete profile"/></a>
+            <a href="{% url 'athletes:update' %}">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Update Profile
+                    <i class="material-icons right">edit</i>
+                </button>
+            </a>
         </p>
         <p>
         <h3>Your Scores</h3>

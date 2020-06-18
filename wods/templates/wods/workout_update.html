@@ -1,4 +1,5 @@
 {% extends 'base/base-breadcrums.html' %}
+{% load materializecss %}
 
 {% block title %}Update this workout{% endblock %}
 {% block title-header %}Update this workout{% endblock %}
@@ -9,8 +10,10 @@
             <h1>Edit Workout</h1>
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Save">
+                {{ form|materializecss }}
+                <button class="btn waves-effect waves-light" type="submit" name="action">Save
+                    <i class="material-icons right">send</i>
+                </button>
             </form>
         {% else %}
             <h1>This workout has scores by other people so you cannot update it!</h1>

@@ -1,7 +1,9 @@
 {% extends 'base/base-breadcrums.html' %}
+{% load materializecss %}
 
 {% block title %}Confirm Deletion{% endblock %}
 {% block title-header %}Confirm Deletion{% endblock %}
+{% load materializecss %}
 
 {% block content %}
 
@@ -13,8 +15,8 @@
 
     <form method="post" action="{% url 'score:delete' score.id %}">
         {% csrf_token %}
-        <button type="submit">
-            delete score
+        <button class="btn waves-effect red darken-4" type="submit" name="action">delete
+            <i class="material-icons right">delete</i>
         </button>
     </form>
 
