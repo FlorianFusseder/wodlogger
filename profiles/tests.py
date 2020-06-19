@@ -55,7 +55,7 @@ class SignUpView(TestCase):
     def test_get_signup_form(self):
         response = self.client.get(signup_url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Sign up")
+        self.assertContains(response, "sign up")
         self.assertContains(response, "First name")
         self.assertContains(response, "Last name")
 

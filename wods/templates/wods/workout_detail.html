@@ -1,20 +1,25 @@
 {% extends 'base/base-breadcrums.html' %}
 
 {% block title %}Workout details{% endblock %}
+{% block title-header %}Workout details{% endblock %}
 
 {% block content %}
-    <h1>Workout details</h1>
-    <h3>{{ workout.name }}</h3>
-    <p>
-        CREATED BY:
-        <a href="{% url 'athletes:detail' workout.creator.id %}">{{ workout.creator.get_signature }}</a>
-        <br>
-        AT: {{ workout.date }}<br>
-    </p>
-
-    DESC: {{ workout.description }}
-    <br>
-    TYPE: {{ workout.get_type_display }}
+    <h3 class="header">{{ workout.name }}</h3>
+    <div>
+        <ul>
+            <li><p>CREATED BY: <a
+                    href="{% url 'athletes:detail' workout.creator.id %}">{{ workout.creator.get_signature }}</a></p>
+            </li>
+            <li><p>AT: {{ workout.date }}</p></li>
+            <li>
+                <div class="divider"></div>
+            </li>
+        </ul>
+        <ul>
+            <li>Type: {{ workout.get_workout_type_display }}</li>
+            <li><p>Description: </p>{{ workout.description }}</li>
+        </ul>
+    </div>
     {% if workout.creator.user == user %}
         <p>
             <a href="{% url 'wods:update' workout.id %}">

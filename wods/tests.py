@@ -61,7 +61,8 @@ class DataFilledWorkoutViewNotLoggedIn(SetupWorkoutData):
         self.assertContains(response, "CREATED BY:")
         self.assertContains(response, "last_name1, first_name1")
         self.assertContains(response, "AT:")
-        self.assertContains(response, "DESC: AwesomeDescription")
+        self.assertContains(response, "Description:")
+        self.assertContains(response, "AwesomeDescription")
         self.assertContains(response, "SCORES:")
         self.assertContains(response, "No scores yet! Be the first!")
 
@@ -72,7 +73,8 @@ class DataFilledWorkoutViewNotLoggedIn(SetupWorkoutData):
         self.assertContains(response, "CREATED BY:")
         self.assertContains(response, "last_name1, first_name1")
         self.assertContains(response, "AT:")
-        self.assertContains(response, "DESC: AwesomeDescription")
+        self.assertContains(response, "Description:")
+        self.assertContains(response, "AwesomeDescription")
         self.assertContains(response, "SCORES:")
         self.assertEqual(2, len(response.context_data['scores']))
 
@@ -328,13 +330,13 @@ class CreateWorkoutView(SetupWorkoutData):
         self.assertEqual(get_create_response.status_code, 200)
         self.assertContains(get_create_response, "Workout")
         self.assertContains(get_create_response, "Description")
-        self.assertContains(get_create_response, "Type")
+        self.assertContains(get_create_response, "Workout type")
         self.assertContains(get_create_response, "Name")
         self.assertContains(get_create_response, 'save')
 
         post_create_response = self.client.post(create_url, {
             'description': 'wod_description',
-            'type': 'EMOM',
+            'workout_type': 'EMOM',
             'name': 'wod_name',
         })
         self.assertTrue(post_create_response.status_code, 302)
@@ -379,7 +381,7 @@ class AddScoreToWorkoutView(SetupWorkoutData):
         self.assertContains(get_add_score_response, "For Time")
         self.assertContains(get_add_score_response, "Description:")
         self.assertContains(get_add_score_response, "Score")
-        self.assertContains(get_add_score_response, "Execution date")
+        self.assertContains(get_add_score_response, "id_execution_date")
         self.assertContains(get_add_score_response, "Comment")
         self.assertContains(get_add_score_response, 'save')
 

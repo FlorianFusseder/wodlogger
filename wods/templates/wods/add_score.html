@@ -7,12 +7,12 @@
 {% block content %}
     {% if user.is_authenticated %}
         <p>For: {{ workout.name }}</p>
-        <p>Type: {{ workout.get_type_display }}</p>
+        <p>Type: {{ workout.get_workout_type_display }}</p>
         <p>Description:<br>{{ workout.description }}</p>
         <form method="post">
             {% csrf_token %}
             {{ form.score|materializecss }}
-            {{ form.execution_date}}
+            {{ form.execution_date }}
             {{ form.comment|materializecss }}
             <button class="btn waves-effect waves-light" type="submit" name="action">save
                 <i class="material-icons right">save</i>

@@ -21,3 +21,42 @@ header, main, footer {
         padding-left: 0;
     }
 }
+
+nav .nav-wrapper {
+    position: relative;
+    height: 100%
+}
+
+nav.top-nav {
+    height: 110px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+    background-color: transparent;
+}
+
+.page-footer {
+    padding-top: 20px;
+    color: transparent;
+    background-color: transparent;
+}
+
+.page-footer .footer-copyright {
+    overflow: hidden;
+    min-height: 50px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 10px 0px;
+    color: transparent;
+    background-color: transparent;
+}

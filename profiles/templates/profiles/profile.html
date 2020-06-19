@@ -2,11 +2,9 @@
 {% load materializecss %}
 
 {% block title %}Profile{% endblock %}
-{% block title-header %}Welcome!{% endblock %}
+{% block title-header %}Athlete Profile{% endblock %}
 {% block content %}
     {% if user.is_authenticated %}
-        <p>
-        <h2>Your Athlete Profile:</h2>
         User Name: {{ user.username }}<br>
         {% if user.athlete.first_name %}
             First Name: {{ user.athlete.first_name }}<br>
