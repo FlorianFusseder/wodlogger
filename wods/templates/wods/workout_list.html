@@ -9,10 +9,29 @@
     {% if workout_list %}
         <ul>
             {% for workout in workout_list %}
-                <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.name }} {{ workout.score_type }}
-                    from {{ workout.date }}</a>
-                    by
-                    <a href="{% url 'athletes:detail' workout.creator.id %}">{{ workout.creator.get_signature }}</a></li>
+                <li>
+                    <div class="row">
+                        <div class="s12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-title">
+                                        <span class="left">{{ workout.name }}</span>
+                                        <span class="right">{{ workout.get_workout_type_display }}</span>
+                                    </div>
+                                    <div class="card-content">
+                                        <p>{{ workout.description }}</p>
+                                    </div>
+                                </div>
+                                <div class="card-action">
+                                    <a href="{% url 'wods:detail' workout.id %}">Workout detail</a>
+                                    <span class="right">{{ workout.date }}</span>
+                                    <a class="right" href="{% url 'athletes:detail' workout.creator.id %}">
+                                        {{ workout.creator.get_signature }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             {% endfor %}
         </ul>
     {% else %}
