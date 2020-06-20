@@ -4,15 +4,9 @@
 {% block title %}Profile{% endblock %}
 {% block title-header %}Athlete Profile{% endblock %}
 {% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'profiles/style.css' %}">
     {% if user.is_authenticated %}
-        User Name: {{ user.username }}<br>
-        {% if user.athlete.first_name %}
-            First Name: {{ user.athlete.first_name }}<br>
-        {% endif %}
-        {% if user.athlete.last_name %}
-            Last Name: {{ user.athlete.last_name }}<br>
-        {% endif %}
-        </p>
         <p>
             <a href="{% url 'athletes:update' %}">
                 <button class="btn waves-effect waves-light" type="submit" name="action">Update Profile
@@ -20,39 +14,53 @@
                 </button>
             </a>
         </p>
-        <p>
         <h3>Your Scores</h3>
-        {% if scores %}
-            <ul>
-                {% for score in scores %}
-                    <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.name }} done in {{ score.score }}
-                        from {{ score.execution_date }} ( created {{ score.logging_date }} )</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            You have scores no logged until now!<br> Get going by
-            <a href="{% url 'wods:create' %}">creating a new workout</a>
-            and adding a score, or
-            <a href="{% url 'wods:index' %}">add a score</a>
-            to an existing workout
-        {% endif %}
-        </p>
-
-        <p>
-        <h3>Your Workouts</h3>
-        {% if workouts %}
-            <ul>
-                {% for workout in workouts %}
-                    <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.name }} ({{ workout.workout_type }}):
-                        {{ workout.description }} created at {{ workout.date }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            Athlete has not yet created a workout! Get going by
-            <a href="{% url 'wods:create' %}">creating a new workout</a>!
-        {% endif %}
-        </p>
-
+        <div>
+            {% if scores %}
+                <table>
+                    <thead>
+                    <tr>
+                        <th>workout</th>
+                        <th>score</th>
+                        <th>execution date</th>
+                        <th>comment</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for score in scores %}
+                        <tr>
+                            <td><a href="{% url 'wods:detail' score.workout.id %}">{{ score.workout.name }}</a></td>
+                            <td>{{ score.score }}</td>
+                            <td>{{ score.execution_date }}</td>
+                            <td><p class="word-break">{{ score.comment }}</p></td>
+                            <td><a href="{% url 'score:detail' score.id %}"><i
+                                    class="material-icons right">remove_red_eye</i></a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                You have scores no logged until now!<br> Get going by
+                <a href="{% url 'wods:create' %}">creating a new workout</a>
+                and adding a score, or
+                <a href="{% url 'wods:index' %}">add a score</a>
+                to an existing workout
+            {% endif %}
+        </div>
+        <div>
+            <h3>Your Workouts</h3>
+            {% if workouts %}
+                <div class="collection">
+                    {% for workout in workouts %}
+                        <a class="collection-item" href="{% url 'wods:detail' workout.id %}">{{ workout.name }}
+                            ({{ workout.workout_type }}) <span class="secondary-content">© {{ workout.date }}</span></a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                Athlete has not yet created a workout! Get going by
+                <a href="{% url 'wods:create' %}">creating a new workout</a>!
+            {% endif %}
+        </div>
     {% else %}
         <p>You are not logged in</p>
         <a href="{% url 'login' %}">login</a>

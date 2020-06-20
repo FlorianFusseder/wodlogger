@@ -4,35 +4,70 @@
 {% block title %}Profile{% endblock %}
 {% block title-header %}Athlete details{% endblock %}
 {% block content %}
-    User Name: {{ athlete.user.username }}<br>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'athletes/style.css' %}">
+    <div class="row">
+        <div class="col s2">User Name:</div>
+        <div class="col s10">{{ athlete.user.username }}</div>
+    </div>
     {% if athlete.first_name %}
-        First Name: {{ athlete.first_name }}<br>
+        <div class="row">
+            <div class="col s2">First Name:</div>
+            <div class="col s10">{{ athlete.first_name }}</div>
+        </div>
     {% endif %}
     {% if athlete.last_name %}
-        Last Name:    {{ athlete.last_name }}<br>
+        <div class="row">
+            <div class="col s2">Last Name:</div>
+            <div class="col s10">{{ athlete.last_name }}</div>
+        </div>
     {% endif %}
-    <h3>Scores</h3>
-    {% if scores %}
-        <ul>
-            {% for score in scores %}
-                <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.name }} done in {{ score.score }}
-                    from {{ score.execution_date }} ( created: {{ score.logging_date }} )</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        Athlete did not add scores yet
-    {% endif %}
+    <div class="row">
+        <div class="col s2">Sex:</div>
+        <div class="col s10">{{ athlete.get_sex_display }}</div>
+    </div>
+    <div class="divider"></div>
 
-    <br>
-    <h3>Workouts</h3>
-    {% if workouts %}
-        <ul>
-            {% for workout in workouts %}
-                <li><a href="{% url 'wods:detail' workout.id %}">{{ workout.name }} ({{ workout.workout_type }}):
-                    {{ workout.description }} created at {{ workout.date }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        Athlete has not yet created a workout
-    {% endif %}
+    <h3>Your Scores</h3>
+    <div>
+        {% if scores %}
+            <table>
+                <thead>
+                <tr>
+                    <th>workout</th>
+                    <th>score</th>
+                    <th>execution date</th>
+                    <th>comment</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for score in scores %}
+                    <tr>
+                        <td><a href="{% url 'wods:detail' score.workout.id %}">{{ score.workout.name }}</a></td>
+                        <td>{{ score.score }}</td>
+                        <td>{{ score.execution_date }}</td>
+                        <td><p class="word-break">{{ score.comment }}</p></td>
+                        <td><a href="{% url 'score:detail' score.id %}"><i
+                                class="material-icons right">remove_red_eye</i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            Athlete did not add scores yet
+        {% endif %}
+    </div>
+    <div>
+        <h3>Your Workouts</h3>
+        {% if workouts %}
+            <div class="collection">
+                {% for workout in workouts %}
+                    <a class="collection-item" href="{% url 'wods:detail' workout.id %}">{{ workout.name }}
+                        ({{ workout.workout_type }}) <span class="secondary-content">© {{ workout.date }}</span></a>
+                {% endfor %}
+            </div>
+        {% else %}
+            Athlete has not yet created a workout
+        {% endif %}
+    </div>
 {% endblock %}

@@ -1,11 +1,20 @@
 from django.contrib.auth.models import AbstractUser, User
 from django.db import models
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 
 class Athlete(models.Model):
+    class Sex(models.TextChoices):
+        MALE = 'M', _('Male'),
+        FEMALE = 'F', _('Female'),
+        PRIVATE = 'X', _("I don't want to share")
+
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    sex = models.CharField(max_length=1,
+                           choices=Sex.choices,
+                           default=Sex.PRIVATE)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def get_signature(self):

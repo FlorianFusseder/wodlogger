@@ -46,8 +46,8 @@ class ProfileViewLoggedIn(TestCase):
 
         response = self.client.get(profile_url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "AwesomeWod done in 100")
-        self.assertContains(response, "AwesomeWod (FOR_TIME):")
+        self.assertEqual(len(response.context_data['scores']), 1)
+        self.assertEqual(len(response.context_data['workouts']), 1)
 
 
 class SignUpView(TestCase):

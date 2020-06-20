@@ -40,3 +40,10 @@ li a {
   top: 22px;
   right: 16px;
 }
+
+.word-break {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 450px;
+}

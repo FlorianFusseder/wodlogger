@@ -5,6 +5,11 @@
 
 {% block content %}
     <h3 class="header">{{ workout.name }}</h3>
+    <a href="{% url 'wods:add_score' workout.id %}">
+        <button class="btn waves-effect waves-light" type="submit" name="action">log score
+            <i class="material-icons right">add</i>
+        </button>
+    </a>
     <div>
         <ul>
             <li><p>CREATED BY: <a
@@ -35,24 +40,22 @@
         </p>
     {% endif %}
     <p>
-        SCORES:
-        {% if scores %}
-            <ul>
-                {% for score in scores %}
-                    <li><a href="{% url 'score:detail' score.id %}">{{ score.score }}
-                        from {{ score.date }}</a>
-                        by
-                        <a href="{% url 'athletes:detail' score.athlete.id %}">{{ score.athlete.get_signature }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <br>No scores yet! Be the first!
-        {% endif %}
+    <h3></h3>
+    {% if scores %}
+        <ul class="collection with-header">
+            <li class="collection-header"><h4>Scores</h4></li>
+            {% for score in scores %}
+                <li class="collection-item">
+                    <div>{{ score.score }}
+                        <a href="{% url 'score:detail' score.id %}" class="secondary-content">
+                            <i class="material-icons">remove_red_eye</i></a>
+                        <div>by {{ score.athlete.get_signature }}</div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <br>No scores yet! Be the first!
+    {% endif %}
     </p>
-    <a href="{% url 'wods:add_score' workout.id %}">
-        <button class="btn waves-effect waves-light" type="submit" name="action">log score
-            <i class="material-icons right">add</i>
-        </button>
-    </a>
 {% endblock %}

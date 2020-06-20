@@ -12,8 +12,10 @@
                 <li class="collection-item avatar-small">
                     <a href="{% url 'athletes:detail' athlete.id %}">
                         <img src="/static/root/images/avatar_placeholder.png" alt="" class="circle"></a>
-                    <span class="title">{{ user.username }}</span>
-                    <p>{{ athlete.get_signature }}</p>
+                    <a href="{% url 'athletes:detail' athlete.id %}">
+                        <span class="title">{{ athlete.user.username }}</span>
+                        <p>{{ athlete.get_signature }}</p>
+                    </a>
                     <a href="{% url 'athletes:detail' athlete.id %}" class="secondary-content"><i
                             class="material-icons">contacts</i></a>
                 </li>

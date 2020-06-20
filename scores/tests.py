@@ -43,8 +43,8 @@ class DataFilledScoreViewNotLoggedIn(SetupScoreData):
         self.assertContains(response, "Score list")
         self.assertContains(response, "last_name1, first_name1")
         self.assertContains(response, "last_name2, first_name2")
-        self.assertContains(response, "AwesomeWod at 100")
-        self.assertContains(response, "AwesomeWod at 200")
+        self.assertContains(response, "100")
+        self.assertContains(response, "200")
         self.assertEqual(2, len(response.context_data['score_list']))
 
     def test_score_detail(self):
@@ -55,10 +55,13 @@ class DataFilledScoreViewNotLoggedIn(SetupScoreData):
         self.assertContains(response, "last_name1, first_name1")
         self.assertContains(response, "WORKOUT:")
         self.assertContains(response, "AwesomeWod")
-        self.assertContains(response, "AT: ")
-        self.assertContains(response, "DESC: AwesomeDescription")
-        self.assertContains(response, "SCORE: 100")
-        self.assertContains(response, "COMMENT: AwesomeComment1")
+        self.assertContains(response, "AT:")
+        self.assertContains(response, "DESC:")
+        self.assertContains(response, "AwesomeDescription")
+        self.assertContains(response, "SCORE:")
+        self.assertContains(response, "100")
+        self.assertContains(response, "COMMENT:")
+        self.assertContains(response, "AwesomeComment1")
 
     def test_score_editable_if_owner(self):
         response = self.client.post('/profile/login/',

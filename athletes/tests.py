@@ -46,8 +46,8 @@ class DataFilledAthleteView(TestCase):
         self.assertContains(response, "user_name1")
         self.assertContains(response, "first_name1")
         self.assertContains(response, "last_name1")
-        self.assertContains(response, "Athlete did not add scores yet")
-        self.assertContains(response, "Athlete has not yet created a workout")
+        self.assertEqual(len(response.context_data['scores']), 0)
+        self.assertEqual(len(response.context_data['workouts']), 0)
 
     def test_athlete_detail_with_wod_and_score(self):
         response = self.client.get('/athletes/2/')
@@ -56,5 +56,5 @@ class DataFilledAthleteView(TestCase):
         self.assertContains(response, "user_name2")
         self.assertContains(response, "first_name2")
         self.assertContains(response, "last_name2")
-        self.assertContains(response, "AwesomeWod done in 100")
-        self.assertContains(response, "AwesomeWod (FOR_TIME):")
+        self.assertEqual(len(response.context_data['scores']), 1)
+        self.assertEqual(len(response.context_data['workouts']), 1)

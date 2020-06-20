@@ -26,7 +26,7 @@ class DetailView(generic.DetailView):
 
 class UpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Athlete
-    fields = ['first_name', 'last_name']
+    fields = ['first_name', 'last_name', 'sex']
 
     def get_object(self, queryset=None):
         athlete = Athlete.objects.get(user__username=self.request.user.username)

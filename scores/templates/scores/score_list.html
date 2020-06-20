@@ -6,21 +6,37 @@
 
 {% block content %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'wods/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'scores/style.css' %}">
     {% if score_list %}
         <ul>
             {% for score in score_list %}
-                <li><a href="{% url 'score:detail' score.id %}">{{ score.workout.name }} at {{ score.score }}
-                    from {{ score.execution_date }}</a> by
-                    <a href="{% url 'athletes:detail' score.athlete.id %}">
-                        {% if score.athlete.user == user %}
-                            You
-                        {% else %}
-                            {{ score.athlete.get_signature }}
-                        {% endif %}
-                    </a>
-                    ( {{ score.logging_date }} )
-                </li>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">{{ score.workout.name }}</div>
+                        by {{ score.athlete.get_signature }} at {{ score.execution_date }}
+                        <div class="grey-text meta-data">{{ score.logging_date }}</div>
+                    </div>
+                    <div class="card-tabs">
+                        <ul class="tabs tabs-fixed-width">
+                            <li class="tab"><a class="active" href="#score-data">score data</a></li>
+                            <li class="tab"><a href="#workout">workout</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-content grey lighten-4">
+                        <div id="score-data">
+                            <p>{{ score.workout.get_workout_type_display }}</p>
+                            <p>{{ score.score }}</p>
+                            <p>{{ score.comment }}</p>
+                        </div>
+                        <div id="workout">
+                            {{ score.workout.description }}
+                        </div>
+                    </div>
+                    <div class="card-action">
+                        <a href="{% url 'score:detail' score.id %}">view score details</a>
+                        <a href="{% url 'athletes:detail' score.athlete.id %}">view athletes profile</a>
+                    </div>
+                </div>
             {% endfor %}
         </ul>
     {% else %}

@@ -63,7 +63,7 @@ class DataFilledWorkoutViewNotLoggedIn(SetupWorkoutData):
         self.assertContains(response, "AT:")
         self.assertContains(response, "Description:")
         self.assertContains(response, "AwesomeDescription")
-        self.assertContains(response, "SCORES:")
+        self.assertContains(response, "Scores")
         self.assertContains(response, "No scores yet! Be the first!")
 
     def test_workout_detail_with_scores(self):
@@ -75,8 +75,8 @@ class DataFilledWorkoutViewNotLoggedIn(SetupWorkoutData):
         self.assertContains(response, "AT:")
         self.assertContains(response, "Description:")
         self.assertContains(response, "AwesomeDescription")
-        self.assertContains(response, "SCORES:")
-        self.assertEqual(2, len(response.context_data['scores']))
+        self.assertContains(response, "Scores")
+        self.assertEqual(len(response.context_data['scores']), 2)
 
     def test_workout_editable_if_owner(self):
         response = self.client.post('/profile/login/',
