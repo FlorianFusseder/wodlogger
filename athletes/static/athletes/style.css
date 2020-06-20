@@ -1,3 +1,42 @@
 li a {
     color: green;
 }
+
+.collection .collection-item.avatar-small {
+    min-height: 60px;
+    padding-left: 72px;
+    position: relative;
+}
+
+.collection .collection-item.avatar-small:not(.circle-clipper) > .circle,
+.collection .collection-item.avatar-small :not(.circle-clipper) > .circle {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  left: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.collection .collection-item.avatar-small i.circle {
+  font-size: 18px;
+  line-height: 42px;
+  color: #fff;
+  background-color: #999;
+  text-align: center;
+}
+
+.collection .collection-item.avatar-small .title {
+  font-size: 16px;
+}
+
+.collection .collection-item.avatar-small p {
+  margin: 0;
+}
+
+.collection .collection-item.avatar-small .secondary-content {
+  position: absolute;
+  top: 22px;
+  right: 16px;
+}

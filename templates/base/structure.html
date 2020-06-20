@@ -12,15 +12,15 @@
     <ul id="slide-out" class="sidenav sidenav-fixed">
         <li>
             <div class="user-view">
-                {#                <div class="background">#}
-                {#                    <img src="images/office.jpg">#}
-                {#                </div>#}
-                {#                <a href="#user"><img class="circle" src="images/yuna.jpg"></a>#}
-                <div>
-                    <a href="{% url 'profiles:profile' %}"><span class="black-text">{{ user.username }}</span></a>
-                    <br>
-                    <span class="black-text">{{ user.athlete.get_signature }}</span>
+                <div class="background">
+                    <img src="images/office.jpg">
                 </div>
+                <a href="{% url 'profiles:profile' %}">
+                    <img class="circle" src="/static/root/images/avatar_placeholder.png"></a>
+
+                <a href="{% url 'profiles:profile' %}"><span class="black-text name">{{ user.username }}</span></a>
+                <a href="{% url 'profiles:profile' %}"><span
+                        class="black-text signature">{{ user.athlete.get_signature }}</span></a>
             </div>
         </li>
 
