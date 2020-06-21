@@ -22,15 +22,8 @@ header, main, footer {
     }
 }
 
-/*nav {*/
-/*    color: #ffffff;*/
-/*    background-color: transparent;*/
-/*    height: 0;*/
-/*    line-height: 0;*/
-/*}*/
-
-nav.top-nav {
-    height: 110px;
+header {
+    height: 152px;
     -webkit-box-shadow: none;
     box-shadow: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.14);

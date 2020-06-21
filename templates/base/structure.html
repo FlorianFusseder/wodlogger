@@ -1,11 +1,17 @@
 {% extends 'base/base.html' %}
 
 {% block header %}
-    <nav class="top-nav">
-        <div class="container">
-            <h1 class="header black-text">{% block title-header %}{% endblock %}</h1>
+    {#    <nav class="top-nav">#}
+    <div class="container">
+        <div class="top-nav">
+            <div class="row">
+                <div class="">
+                    <h1 class="header black-text">{% block title-header %}{% endblock %}</h1>
+                </div>
+            </div>
         </div>
-    </nav>
+    </div>
+    {#    </nav>#}
 
     <ul id="slide-out" class="sidenav sidenav-fixed">
         <li>
