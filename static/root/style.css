@@ -22,16 +22,12 @@ header, main, footer {
     }
 }
 
-nav {
-    color: #ffffff;
-    background-color: transparent;
-    height: 0;
-    line-height: 0;
-}
-nav .nav-wrapper {
-    position: relative;
-    height: 100%
-}
+/*nav {*/
+/*    color: #ffffff;*/
+/*    background-color: transparent;*/
+/*    height: 0;*/
+/*    line-height: 0;*/
+/*}*/
 
 nav.top-nav {
     height: 110px;
