@@ -1,29 +1,52 @@
-{% extends 'base/base.html' %}
 {% load materializecss %}
 
-{% block title %}Wodlogger{% endblock %}
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <title>Wodlogger</title>
+    {% block css %}
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/css/materialize.min.css"
+              integrity="sha256-qj3p6P1fJIV+Ndv7RW1ovZI2UhOuboj9GcODzcNFIN8=" crossorigin="anonymous"/>
+    {% endblock css %}
+</head>
+<body>
+<main>
+    <div class="container section">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}">
 
-{% block content %}
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}">
-
-    {% if user.is_authenticated %}
-        <a href="{% url 'profiles:profile' %}">
-            <button class="btn waves-effect waves-light" type="submit" name="action">View Profile
-                <i class="material-icons right">person</i>
+        {% if user.is_authenticated %}
+            <a href="{% url 'profiles:profile' %}">
+                <button class="btn waves-effect waves-light right" type="submit" name="action">View Profile
+                    <i class="material-icons right">person</i>
+                </button>
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}">
+                <button class="btn waves-effect waves-light right" type="submit" name="action">Log In
+                    <i class="material-icons right">account_circle</i>
+                </button>
+            </a>
+        {% endif %}
+        <br><br>
+        <a href="{% url 'profiles:signup' %}">
+            <button class="btn waves-effect waves-light right" type="submit" name="action">Create New Account
+                <i class="material-icons right">person_add</i>
             </button>
         </a>
-    {% else %}
-        <a href="{% url 'login' %}">
-            <button class="btn waves-effect waves-light" type="submit" name="action">Log In
-                <i class="material-icons right">account_circle</i>
-            </button>
-        </a>
-    {% endif %}
-    <br><br>
-    <a href="{% url 'profiles:signup' %}">
-        <button class="btn waves-effect waves-light" type="submit" name="action">Create New Account
-            <i class="material-icons right">person_add</i>
-        </button>
-    </a>
-{% endblock %}
+    </div>
+</main>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'root/style.css' %}">
+<footer class="page-footer">
+    <div class="footer-copyright">
+        <div class="grey-text text-lighten-1 container">© 2020 Copyright
+            <a class="grey-text text-lighten-1 right" href="mailto:fussederflorian@gmail.com">Send me an email at
+                fussederflorian@gmail.com</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

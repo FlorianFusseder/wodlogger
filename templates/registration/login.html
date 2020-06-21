@@ -4,6 +4,7 @@
 
 {% load i18n %}
 {% block title %}{% trans "Login" %}{% endblock %}
+{% block title-header %}{% trans "Login" %}{% endblock %}
 {% block content %}
     {% url 'password_reset' as auth_pwd_reset_url %}
     {% url 'profiles:signup' as register_url %}
@@ -28,10 +29,9 @@
         <button class="btn waves-effect waves-light" type="submit" name="action">Log In
             <i class="material-icons right">account_circle</i>
         </button>
-        {#        <input type="hidden" name="next" value="{{ next }}"/>#}
 
         <p>
-            <a href="{{ register_url }}">Need an account</a>?
+            <a href="{{ register_url }}">Need an account?</a>
         </p>
 
     </form>
