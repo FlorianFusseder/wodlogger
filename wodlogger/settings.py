@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'athletes.apps.AthletesConfig',
     'scores.apps.ScoresConfig',
     'profiles.apps.ProfilesConfig',
+    'wodmovements.apps.WodmovementsConfig',
     'materializecssform',
     'django.contrib.admin',
     'django.contrib.auth',

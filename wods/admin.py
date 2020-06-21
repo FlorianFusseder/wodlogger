@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from wods.models import Athlete, Workout
+from wodmovements.models import Movement
+from wods.models import Workout
 
-admin.site.register(Athlete)
+admin.site.register(Movement)
 admin.site.register(Workout)
