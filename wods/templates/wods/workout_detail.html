@@ -22,7 +22,8 @@
         </ul>
         <ul>
             <li>Type: {{ workout.get_workout_type_display }}</li>
-            <li><p>Description: </p>{{ workout.description }}</li>
+            <li>{{ workout.get_components_display|linebreaksbr }}</li>
+            <li>Description: {{ workout.description }}</li>
         </ul>
     </div>
     {% if workout.creator.user == user %}
