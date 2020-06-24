@@ -38,6 +38,7 @@ class CreateView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         workout = form.save(commit=False)
+        workout.set_metadata()
         workout.creator = Athlete.objects.get(user__username=get_user(self.request).username)
         workout.save()
         return super().form_valid(form)

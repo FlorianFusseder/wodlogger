@@ -28,7 +28,9 @@ class Movement(models.Model):
 
 class Component(models.Model):
     reps = models.PositiveSmallIntegerField(blank=False, null=False, default=1)
-    kg = models.PositiveSmallIntegerField(blank=True, null=True)
+    kg_a = models.PositiveSmallIntegerField(blank=True, null=True)
+    kg_m = models.PositiveSmallIntegerField(blank=True, null=True)
+    kg_f = models.PositiveSmallIntegerField(blank=True, null=True)
     distance = models.PositiveSmallIntegerField(blank=True, null=True)
     height = models.PositiveSmallIntegerField(blank=True, null=True)
     timespan = models.DurationField(blank=True, null=True)
