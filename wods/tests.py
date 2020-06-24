@@ -337,6 +337,7 @@ class CreateWorkoutView(SetupWorkoutData):
         post_create_response = self.client.post(create_url, {
             'description': 'wod_description',
             'workout_type': 'EMOM',
+            'components': '',
             'name': 'wod_name',
         })
         self.assertTrue(post_create_response.status_code, 302)

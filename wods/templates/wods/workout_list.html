@@ -19,10 +19,9 @@
                                             class="material-icons">add</i></a>
                                     <div class="card-title">
                                         <p class="left">{{ workout.name }}</p>
-                                        <p class="right">{{ workout.get_workout_type_display }}</p>
                                     </div>
                                     <div class="card-text-content">
-                                        <p>{{ workout.description }}</p>
+                                        <p>{{ workout.get_components_display|linebreaksbr }}</p>
                                     </div>
                                 </div>
                                 <div class="card-action">

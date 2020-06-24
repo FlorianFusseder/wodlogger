@@ -8,17 +8,10 @@ class Movement(models.Model):
         WEIGHTLIFTING = 'W', _('Wightlifiting'),
         MONOSTRUCTURAL = 'M', _("Monostructural")
 
-    class Unit(models.TextChoices):
-        METERS = 'METERS', _("m"),
-        REPETITIONS = 'REPS', _("x"),
-        WEIGHT = 'WEIGHT', _("kg")
-        REPETITIONS_AND_WEIGHT = 'REPS_AND_WEIGHT', _("x @ kg")
-        CALORIES = 'CALORIES', _("cal")
-
     movement_name = models.CharField(max_length=50)
-    movement_unit = models.CharField(max_length=20,
-                                     choices=Unit.choices,
-                                     default=Unit.REPETITIONS)
+    has_weight = models.BooleanField()
+    has_distance = models.BooleanField()
+    has_height = models.BooleanField()
     modality = models.CharField(max_length=1,
                                 choices=Modality.choices,
                                 default=Modality.GYMNASTIC)
@@ -29,9 +22,20 @@ class Movement(models.Model):
     def get_movement_display(self):
         return self.movement_name
 
-    def get_unit_display(self):
-        return dict(Movement.Unit.choices)[self.movement_unit]
+    def __str__(self):
+        return f"Movement [ component_name: {self.movement_name}, modality: {self.modality} ]"
+
+
+class Component(models.Model):
+    reps = models.PositiveSmallIntegerField(blank=False, null=False, default=1)
+    kg = models.PositiveSmallIntegerField(blank=True, null=True)
+    distance = models.PositiveSmallIntegerField(blank=True, null=True)
+    height = models.PositiveSmallIntegerField(blank=True, null=True)
+    timespan = models.DurationField(blank=True, null=True)
+    movement = models.ForeignKey(Movement, on_delete=models.DO_NOTHING)
+
+    def get_component_display(self):
+        return f"{self.reps} {self.movement.get_movement_display()}"
 
     def __str__(self):
-        return f"Movement [ component_name: {self.movement_name}, component_unit: {self.movement_unit}, " \
-               f"modality: {self.modality} ]"
+        return f"Component [ amount: {self.reps}, kg: {self.kg}, movement: {self.movement} ]"
