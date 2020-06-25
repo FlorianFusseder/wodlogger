@@ -28,11 +28,11 @@ class Movement(models.Model):
 
 class Component(models.Model):
     reps = models.PositiveSmallIntegerField(blank=False, null=False, default=1)
-    kg_a = models.PositiveSmallIntegerField(blank=True, null=True)
-    kg_m = models.PositiveSmallIntegerField(blank=True, null=True)
-    kg_f = models.PositiveSmallIntegerField(blank=True, null=True)
+    max_reps = models.BooleanField(default=False)
+    kg_m = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=2)
+    kg_f = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=2)
     distance = models.PositiveSmallIntegerField(blank=True, null=True)
-    height = models.PositiveSmallIntegerField(blank=True, null=True)
+    height = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=3)
     timespan = models.DurationField(blank=True, null=True)
     movement = models.ForeignKey(Movement, on_delete=models.DO_NOTHING)
 
@@ -40,4 +40,4 @@ class Component(models.Model):
         return f"{self.reps} {self.movement.get_movement_display()}"
 
     def __str__(self):
-        return f"Component [ amount: {self.reps}, kg: {self.kg}, movement: {self.movement} ]"
+        return f"Component [ amount: {self.reps}, kg: {self.kg_f}/{self.kg_m}, movement: {self.movement} ]"

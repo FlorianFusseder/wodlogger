@@ -8,6 +8,41 @@ from wodmovements.models import Movement, Component
 
 
 class Workout(models.Model):
+    class WorkoutStyle(models.TextChoices):
+        ROUNDS_FOR_TIME = 'RFT', _('Rounds for Time'),
+        RFT_SAME_VARYING_REPS = 'RFT_SVR', _('RFT: Same Varying Reps (e.g. 21 - 15 - 9)'),
+        RFT_INDEPENDENT_VARYING_REPS = 'RFT_IVR', _('RFT: Independent Varying Reps'),
+        RFT_WITH_BOOKENDS = 'RFT_BOOK', _('RFT with Bookends (Buy-In, Buy-Out)'),
+        EACH_ROUND_FOR_TIME = 'ERFT', _('Each Round For Time'),
+        FOR_TIME = 'FT', _('For Time'),
+        FOR_QUALITY = 'FQ', _('For Quality'),
+        EMOM_MULTIPLE_MOVEMENTS_PER_INTERVAL = 'EMOM_M', _('EMOM: Multiple Movements per Interval'),
+        EMOM_ALTERNATE_MOVEMENTS_EACH_INTERVAL = 'EMOM_A', _('EMOM: Alternate Movements each Interval'),
+        AMRAP = 'AMRAP', _('AMRAP'),
+        AMRAP_REPEATS = 'AMRAP_R', _('AMRAP Repeats'),
+        AMRAP_WITH_BUY_IN = 'AMRAP_BI', _('AMRAP with Buy-In'),
+        AMRAP_WITH_MAX_REP = 'AMRAP_MR', _('AMRAP with Max Rep'),
+        AMREPS = 'AMREPS', _('AMReps'),
+        ASCENDING_AMREPS = 'ASC_AMREPS', _('Ascending AMReps'),
+        TABATA = 'T', _('Tabata'),
+        FGB_STYLE = 'FGB', _('FGB Style'),
+        DEATH_BY_REPS = 'DBR', _('Death By Reps'),
+        ROUNDS_FOR_MAX_REPS = 'RFMR', _('Rounds for Max Reps'),
+        REPS_IN_REMAINING_TIME = 'RRT', _('Reps in Remaining Time'),
+
+        SETS = 'SETS', ('Sets'),
+        EMOM = 'EMOM', _('EMOM'),
+        X_REPS_FOR_TIME = 'X_RFT', _('X Reps for Time'),
+        AMREPS_IN_X_TIME = 'AIXT', _('AMReps in X Time'),
+        MAX_DURATION = 'MD', _('Max Duration'),
+        X_REP_MAX = 'RM', _('X Rep Max'),
+        DEATH_BY_WEIGHT = 'DBW', _('Death By Weight'),
+        SINGLE_DISTANCE = 'SD', _('Single Distance'),
+        INTERVALS_REPEATS = 'IR', _('Intervals / Repeats'),
+        DEATH_BY_DISTANCE = 'DBD', _('Death By Distance'),
+        ON_THE_MINUTE = 'OTM', _('On the Minute'),
+        FOR_DISTANCE = 'FD', _('For Distance'),
+
     class WorkoutType(models.TextChoices):
         TIMED = 'TIMED', _('Timed'),
         AS_MANY_ROUNDS_AS_POSSIBLE = 'AMRAP', _('AMRAP'),
@@ -60,9 +95,10 @@ class Workout(models.Model):
     creator = models.ForeignKey(Athlete, on_delete=models.CASCADE)
     date = models.DateTimeField(default=django.utils.timezone.now)
 
-    duration = models.DurationField()
-    rounds = models.PositiveSmallIntegerField()
-    rep_schema = models.CharField(max_length=50)
+    workout_style = models.CharField(max_length=10, choices=WorkoutStyle.choices)
+    workout_duration = models.DurationField(blank=True)
+    rounds = models.PositiveSmallIntegerField(blank=True, null=True)
+    rep_schema = models.CharField(max_length=50, blank=True)
 
     workout_type = models.CharField(max_length=10, choices=WorkoutType.choices, blank=True)
     benchmark = models.CharField(max_length=10, choices=BenchMark.choices, blank=True)
@@ -81,7 +117,7 @@ class Workout(models.Model):
     def get_components_display(self):
         return "\n".join([x.get_component_display() for x in self.get_components()])
 
-    def set_meta_data(self):
+    def set_metadata(self):
         pass
 
     def __str__(self):
