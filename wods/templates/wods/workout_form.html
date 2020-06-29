@@ -5,14 +5,56 @@
 {% block title-header %}Workout{% endblock %}
 
 {% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wods/style.css' %}">
+
     {% if user.is_authenticated %}
+
         <form method="post">
             {% csrf_token %}
-            {{ form|materializecss }}
+            {{ component_formset.management_form }}
+            {{ workout_form|materializecss }}
+            <div class="divider space"></div>
+            <div class="divider space"></div>
+            <div id="form_set_collection" class="row">
+                {% for form in component_formset %}
+                    {{ form.reps|materializecss:'s1' }}
+                    {{ form.movement|materializecss:'s11' }}
+                {% endfor %}
+            </div>
+
             <button class="btn waves-effect waves-light" type="submit" name="action">save
                 <i class="material-icons right">send</i>
             </button>
         </form>
+
+        <div id="empty_form" style="display:none">
+            {% for field in component_formset.empty_form %}
+                {% if field.label == 'Reps' %}
+                    {{ field|materializecss:'s1' }}
+                {% elif field.label == 'Movement' %}
+                    {{ field|materializecss:'s11' }}
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $('#add_more').click(function () {
+                    let form_idx = $('#id_form-TOTAL_FORMS').val();
+                    let jQuery = $('#empty_form').html().replace(/__prefix__/g, form_idx);
+                    $('#form_set_collection').append(jQuery);
+                    $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+                    console.info(jQuery)
+                    {#$(jQuery.id).formSelect();#}
+                });
+            });
+        </script>
+
+        <button id="add_more" class="btn waves-effect waves-light">add
+            <i class="material-icons right">add</i>
+        </button>
+
     {% else %}
         <p><a href="{% url 'login' %}">Login</a> to create a workout</p>
     {% endif %}

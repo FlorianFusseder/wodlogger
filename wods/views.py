@@ -1,11 +1,14 @@
 from django.contrib.auth import get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import modelformset_factory
 from django.http import HttpResponseForbidden, HttpResponseNotAllowed
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
 from athletes.models import Athlete
 from scores.models import Score
+from wodmovements.models import Component
 from wods.forms import WorkoutForm, AddScoreForm
 from wods.models import Workout
 
@@ -42,6 +45,30 @@ class CreateView(LoginRequiredMixin, generic.CreateView):
         workout.creator = Athlete.objects.get(user__username=get_user(self.request).username)
         workout.save()
         return super().form_valid(form)
+
+
+def create_workout(request):
+    ComponentsFormSet = modelformset_factory(Component, fields=('reps', 'movement'))
+    data = {
+        'form-TOTAL_FORMS': '1',
+        'form-INITIAL_FORMS': '0',
+        'form-MAX_NUM_FORMS': '10',
+        'form-0-reps': 1,
+        'form-1-reps': 1,
+        'form-2-reps': 1,
+        'form-3-reps': 1,
+        'form-4-reps': 1,
+        'form-5-reps': 1,
+        'form-6-reps': 1,
+        'form-7-reps': 1,
+        'form-8-reps': 1,
+        'form-9-reps': 1,
+    }
+
+    return render(request, 'wods/workout_form.html', {
+        'workout_form': WorkoutForm(),
+        'component_formset': ComponentsFormSet(data=data),
+    })
 
 
 class UpdateView(LoginRequiredMixin, generic.UpdateView):
