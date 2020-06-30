@@ -65,7 +65,7 @@
         <script>
             $(document).ready(function () {
                 $('.datepicker').datepicker({'format': 'yyyy-mm-dd'});
-                $('select').formSelect();
+                $('select:not([name=form-__prefix__-movement])').formSelect();
                 $('.sidenav').sidenav();
                 $('.tabs').tabs();
             });

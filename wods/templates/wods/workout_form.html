@@ -45,8 +45,7 @@
                     let jQuery = $('#empty_form').html().replace(/__prefix__/g, form_idx);
                     $('#form_set_collection').append(jQuery);
                     $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
-                    console.info(jQuery)
-                    {#$(jQuery.id).formSelect();#}
+                    $('select:not([name=form-__prefix__-movement])').formSelect();
                 });
             });
         </script>
