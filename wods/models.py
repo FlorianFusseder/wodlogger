@@ -96,7 +96,7 @@ class Workout(models.Model):
     date = models.DateTimeField(default=django.utils.timezone.now)
 
     workout_style = models.CharField(max_length=10, choices=WorkoutStyle.choices)
-    workout_duration = models.DurationField(blank=True)
+    workout_duration = models.DurationField(blank=True, null=True)
     rounds = models.PositiveSmallIntegerField(blank=True, null=True)
     rep_schema = models.CharField(max_length=50, blank=True)
 

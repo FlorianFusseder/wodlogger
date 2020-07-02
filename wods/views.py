@@ -1,5 +1,3 @@
-from typing import List
-
 from django.contrib.auth import get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import modelformset_factory
@@ -62,30 +60,13 @@ def create_workout(request):
         components_form_set = ComponentsFormSet(request.POST)
         workout_form = WorkoutForm(request.POST)
         if components_form_set.is_valid() and workout_form.is_valid():
-            cleaned_components_data = components_form_set.cleaned_data
-            component_list: List[Component] = []
-            for components_datum in cleaned_components_data:
-                reps_ = components_datum['reps']
-                movement_ = components_datum['movement']
-                component = Component.objects.get_or_create(reps=reps_, movement=movement_)
-                component_list.append(component)
-
-            cleaned_workout_data = workout_form.cleaned_data
-            name_ = cleaned_workout_data['name']
-            workout_style_ = cleaned_workout_data['workout_style']
-            description_ = cleaned_workout_data['description']
-            workout_duration_ = cleaned_workout_data['workout_duration']
-            rounds_ = cleaned_workout_data['rounds']
-            rep_schema_ = cleaned_workout_data['rep_schema']
-
-            Workout.objects.create(name=name_,
-                                   workout_style=workout_style_,
-                                   description=description_,
-                                   workout_duration=workout_duration_,
-                                   rounds=rounds_,
-                                   rep_schema=rep_schema_,
-                                   creator_id=request.user.id
-                                   )
+            workout: Workout = workout_form.save(commit=False)
+            workout.creator = request.user.athlete
+            workout.save()
+            component_list = components_form_set.save()
+            workout.components.set(component_list)
+            workout.set_metadata()
+            workout.save()
         return HttpResponseRedirect(reverse('wods:index'))
     else:
         components_form_set = ComponentsFormSet(data=data)
