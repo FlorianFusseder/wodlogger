@@ -1,9 +1,11 @@
+from typing import List
+
 from django.contrib.auth import get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import modelformset_factory
-from django.http import HttpResponseForbidden, HttpResponseNotAllowed
+from django.http import HttpResponseForbidden, HttpResponseNotAllowed, HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from athletes.models import Athlete
@@ -54,20 +56,43 @@ def create_workout(request):
         'form-INITIAL_FORMS': '0',
         'form-MAX_NUM_FORMS': '10',
         'form-0-reps': 1,
-        'form-1-reps': 1,
-        'form-2-reps': 1,
-        'form-3-reps': 1,
-        'form-4-reps': 1,
-        'form-5-reps': 1,
-        'form-6-reps': 1,
-        'form-7-reps': 1,
-        'form-8-reps': 1,
-        'form-9-reps': 1,
     }
 
+    if request.method == 'POST':
+        components_form_set = ComponentsFormSet(request.POST)
+        workout_form = WorkoutForm(request.POST)
+        if components_form_set.is_valid() and workout_form.is_valid():
+            cleaned_components_data = components_form_set.cleaned_data
+            component_list: List[Component] = []
+            for components_datum in cleaned_components_data:
+                reps_ = components_datum['reps']
+                movement_ = components_datum['movement']
+                component = Component.objects.get_or_create(reps=reps_, movement=movement_)
+                component_list.append(component)
+
+            cleaned_workout_data = workout_form.cleaned_data
+            name_ = cleaned_workout_data['name']
+            workout_style_ = cleaned_workout_data['workout_style']
+            description_ = cleaned_workout_data['description']
+            workout_duration_ = cleaned_workout_data['workout_duration']
+            rounds_ = cleaned_workout_data['rounds']
+            rep_schema_ = cleaned_workout_data['rep_schema']
+
+            Workout.objects.create(name=name_,
+                                   workout_style=workout_style_,
+                                   description=description_,
+                                   workout_duration=workout_duration_,
+                                   rounds=rounds_,
+                                   rep_schema=rep_schema_,
+                                   creator_id=request.user.id
+                                   )
+        return HttpResponseRedirect(reverse('wods:index'))
+    else:
+        components_form_set = ComponentsFormSet(data=data)
+        workout_form = WorkoutForm()
     return render(request, 'wods/workout_form.html', {
-        'workout_form': WorkoutForm(),
-        'component_formset': ComponentsFormSet(data=data),
+        'workout_form': workout_form,
+        'component_formset': components_form_set,
     })
 
 
