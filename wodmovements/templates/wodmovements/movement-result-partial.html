@@ -1,0 +1,14 @@
+{% if movements %}
+    <ul>
+        {% for movement in movements %}
+            <p>
+                <label>
+                    <input class="with-gap" name="movement_selection" type="radio"/>
+                    <span>{{ movement.movement_name }}</span>
+                </label>
+            </p>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No movement found.</p>
+{% endif %}

@@ -1,0 +1,59 @@
+<button data-target="modal1" class="btn modal-trigger">Modal</button>
+<div id="modal1" class="modal">
+    <script>
+        $(document).ready(function () {
+
+            const user_input = $("#user-input")
+            const search_icon = $('#search-icon')
+            const movement_div = $('#replaceable-content')
+            const endpoint = '/wods/create/'
+            const delay_by_in_ms = 100
+            let scheduled_function = false
+
+            let ajax_call = function (endpoint, request_parameters) {
+                $.getJSON(endpoint, request_parameters)
+                    .done(response => {
+                        movement_div.fadeTo('slow', 0).promise().then(() => {
+                            movement_div.html(response['html_from_view'])
+                            movement_div.fadeTo('slow', 1)
+                            search_icon.removeClass('blink')
+                        })
+                    })
+            }
+
+
+            user_input.on('keyup', function () {
+
+                const request_parameters = {
+                    q: $(this).val() // value of user_input: the HTML element with ID user-input
+                }
+                search_icon.addClass('blink')
+                if (scheduled_function) {
+                    clearTimeout(scheduled_function)
+                }
+                scheduled_function = setTimeout(ajax_call, delay_by_in_ms, endpoint, request_parameters)
+            })
+        });
+    </script>
+    <div class="modal-content">
+        <div class="row">
+
+            <div class="input-field col s12">
+                <i class="material-icons prefix">search</i>
+                <input id="user-input" type="text">
+                <label for="icon_prefix">Search</label>
+            </div>
+
+            <div id="replaceable-content" class="col s12">
+                {% include 'wodmovements/movement-result-partial.html' %}
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button id="add_more" class="btn waves-effect waves-light" type="button">add
+            <i class="material-icons right">add</i>
+        </button>
+    </div>
+</div>

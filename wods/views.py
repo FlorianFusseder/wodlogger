@@ -1,15 +1,16 @@
 from django.contrib.auth import get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import modelformset_factory
-from django.http import HttpResponseForbidden, HttpResponseNotAllowed, HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from athletes.models import Athlete
 from scores.models import Score
 from wodmovements.forms import ComponentForm
-from wodmovements.models import Component
+from wodmovements.models import Component, Movement
 from wods.forms import WorkoutForm, AddScoreForm
 from wods.models import Workout
 
@@ -56,6 +57,21 @@ def create_workout(request):
         'form-MAX_NUM_FORMS': '10',
         'form-0-reps': 1,
     }
+
+    if request.is_ajax():
+        query_term = request.GET.get('q')
+        if query_term:
+            movements = Movement.objects.filter(movement_name__icontains=query_term)
+        else:
+            movements = Movement.objects.all()
+
+        html = render_to_string(
+            template_name="wodmovements/movement-result-partial.html",
+            context={"movements": movements}
+        )
+
+        data_dict = {"html_from_view": html}
+        return JsonResponse(data=data_dict, safe=False)
 
     if request.method == 'POST':
         components_form_set = ComponentsFormSet(request.POST)
