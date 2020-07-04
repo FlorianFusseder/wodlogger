@@ -8,5 +8,5 @@ class ScoreForm(ModelForm):
         model = Score
         fields = ['score', 'execution_date', 'comment']
         widgets = {
-            'execution_date': DateInput(attrs={'type': 'date'}),
+            'execution_date': DateInput(attrs={'class': 'datepicker'}),
         }

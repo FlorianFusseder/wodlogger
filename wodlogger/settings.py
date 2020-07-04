@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'scores.apps.ScoresConfig',
     'profiles.apps.ProfilesConfig',
     'wodmovements.apps.WodmovementsConfig',
-    'materializecssform',
+    'projecttemplates.apps.ProjecttemplatesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

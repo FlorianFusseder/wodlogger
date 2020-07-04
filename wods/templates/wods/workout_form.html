@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-{% load materializecss %}
+{% load materialize %}
 
 {% block title %}Workout{% endblock %}
 {% block title-header %}Workout{% endblock %}
@@ -13,13 +13,13 @@
         <form method="post">
             {% csrf_token %}
             {{ component_formset.management_form }}
-            {{ workout_form|materializecss }}
+            {{ workout_form|materialize }}
             <div class="divider space"></div>
             <div class="divider space"></div>
             <div id="form_set_collection" class="row">
                 {% for form in component_formset %}
-                    {{ form.reps|materializecss:'s1' }}
-                    {{ form.movement|materializecss:'s11' }}
+                    {{ form.reps|materialize:'s1' }}
+                    {{ form.movement|materialize:'s11' }}
                 {% endfor %}
             </div>
 
@@ -31,9 +31,9 @@
         <div id="empty_form" style="display:none">
             {% for field in component_formset.empty_form %}
                 {% if field.label == 'Reps' %}
-                    {{ field|materializecss:'s1' }}
+                    {{ field|materialize:'s1' }}
                 {% elif field.label == 'Movement' %}
-                    {{ field|materializecss:'s11' }}
+                    {{ field|materialize:'s11' }}
                 {% endif %}
             {% endfor %}
         </div>

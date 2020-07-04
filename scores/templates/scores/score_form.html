@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-{% load materializecss %}
+{% load materialize %}
 
 {% block title %}Score info{% endblock %}
 {% block title-header %}Score info{% endblock %}
@@ -8,9 +8,7 @@
     {% if user.is_authenticated %}
         <form method="post">
             {% csrf_token %}
-            {{ form.score|materializecss }}
-            {{ form.execution_date }}
-            {{ form.comment|materializecss:'value=text' }}
+            {{ form|materialize }}
             <button class="btn waves-effect waves-light" type="submit" name="action">save
                 <i class="material-icons right">save</i>
             </button>

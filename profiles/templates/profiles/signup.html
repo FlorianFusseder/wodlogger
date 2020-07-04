@@ -1,5 +1,5 @@
 {% extends 'registration/registration_base.html' %}
-{% load materializecss %}
+{% load materialize %}
 
 {% block title %}Sign Up{% endblock %}
 {% block title-header %}Sign up{% endblock %}
@@ -21,7 +21,7 @@
 
     <form method="post">
         {% csrf_token %}
-        {{ form|materializecss }}
+        {{ form|materialize }}
         <button class="btn waves-effect waves-light" type="submit" name="action">sign up
             <i class="material-icons right">create</i>
         </button>

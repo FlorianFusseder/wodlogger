@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-{% load materializecss %}
+{% load materialize %}
 
 {% block title %}Update this workout{% endblock %}
 {% block title-header %}Update this workout{% endblock %}
@@ -10,7 +10,7 @@
             <h1>Edit Workout</h1>
             <form method="post">
                 {% csrf_token %}
-                {{ form|materializecss }}
+                {{ form|materialize }}
                 <button class="btn waves-effect waves-light" type="submit" name="action">Save
                     <i class="material-icons right">send</i>
                 </button>
