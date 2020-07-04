@@ -23,7 +23,7 @@ class Movement(models.Model):
         return self.movement_name
 
     def __str__(self):
-        return f"Movement [ component_name: {self.movement_name}, modality: {self.modality} ]"
+        return f"Movement [ movement_name: {self.movement_name}, modality: {self.modality} ]"
 
 
 class Component(models.Model):
@@ -38,6 +38,9 @@ class Component(models.Model):
 
     def get_component_display(self):
         return f"{self.reps} {self.movement.get_movement_display()}"
+
+    def get_movement_display(self):
+        return self.movement.get_movement_display()
 
     def __str__(self):
         return f"Component [ amount: {self.reps}, kg: {self.kg_f}/{self.kg_m}, movement: {self.movement} ]"

@@ -8,6 +8,7 @@ from django.views import generic
 
 from athletes.models import Athlete
 from scores.models import Score
+from wodmovements.forms import ComponentForm
 from wodmovements.models import Component
 from wods.forms import WorkoutForm, AddScoreForm
 from wods.models import Workout
@@ -48,7 +49,7 @@ class CreateView(LoginRequiredMixin, generic.CreateView):
 
 
 def create_workout(request):
-    ComponentsFormSet = modelformset_factory(Component, fields=('reps', 'movement'))
+    ComponentsFormSet = modelformset_factory(Component, form=ComponentForm, min_num=1)
     data = {
         'form-TOTAL_FORMS': '1',
         'form-INITIAL_FORMS': '0',
@@ -67,7 +68,7 @@ def create_workout(request):
             workout.components.set(component_list)
             workout.set_metadata()
             workout.save()
-        return HttpResponseRedirect(reverse('wods:index'))
+            return HttpResponseRedirect(reverse('wods:index'))
     else:
         components_form_set = ComponentsFormSet(data=data)
         workout_form = WorkoutForm()
