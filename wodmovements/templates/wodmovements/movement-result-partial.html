@@ -6,11 +6,4 @@
                class="modal-close collection-item">{{ movement.movement_name }}</a>
         {% endfor %}
     </div>
-{% else %}
-    <div class="collection">
-        {% for movement in default-movements %}
-            <a href="#" onclick="add_movement('{{ movement.id }}', '{{ movement.movement_name }}')"
-               class="modal-close collection-item">{{ movement.movement_name }}</a>
-        {% endfor %}
-    </div>
 {% endif %}

@@ -93,6 +93,7 @@ def create_workout(request):
     return render(request, 'wods/workout_form.html', {
         'workout_form': workout_form,
         'component_formset': components_form_set,
+        'movements': Movement.objects.all()[:10]
     })
 
 
