@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import modelformset_factory
+from django.forms import formset_factory
 from django.http import HttpResponseForbidden, HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -10,7 +10,7 @@ from django.views import generic
 from athletes.models import Athlete
 from scores.models import Score
 from wodmovements.forms import ComponentForm
-from wodmovements.models import Component, Movement
+from wodmovements.models import Movement
 from wods.forms import WorkoutForm, AddScoreForm
 from wods.models import Workout
 
@@ -50,12 +50,11 @@ class CreateView(LoginRequiredMixin, generic.CreateView):
 
 
 def create_workout(request):
-    ComponentsFormSet = modelformset_factory(Component, form=ComponentForm, min_num=1)
+    ComponentsFormSet = formset_factory(ComponentForm, min_num=1)
     data = {
-        'form-TOTAL_FORMS': '1',
+        'form-TOTAL_FORMS': '0',
         'form-INITIAL_FORMS': '0',
         'form-MAX_NUM_FORMS': '10',
-        'form-0-reps': 1,
     }
 
     if request.is_ajax():
@@ -75,6 +74,9 @@ def create_workout(request):
 
     if request.method == 'POST':
         components_form_set = ComponentsFormSet(request.POST)
+        cleaned_data = components_form_set.cleaned_data
+        print(cleaned_data)
+
         workout_form = WorkoutForm(request.POST)
         if components_form_set.is_valid() and workout_form.is_valid():
             workout: Workout = workout_form.save(commit=False)

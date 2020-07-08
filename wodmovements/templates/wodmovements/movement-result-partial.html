@@ -1,14 +1,16 @@
+{% load materialize %}
 {% if movements %}
-    <ul>
+    <div class="collection">
         {% for movement in movements %}
-            <p>
-                <label>
-                    <input class="with-gap" name="movement_selection" type="radio"/>
-                    <span>{{ movement.movement_name }}</span>
-                </label>
-            </p>
+            <a href="#" onclick="add_movement('{{ movement.id }}', '{{ movement.movement_name }}')"
+               class="modal-close collection-item">{{ movement.movement_name }}</a>
         {% endfor %}
-    </ul>
+    </div>
 {% else %}
-    <p>No movement found.</p>
+    <div class="collection">
+        {% for movement in default-movements %}
+            <a href="#" onclick="add_movement('{{ movement.id }}', '{{ movement.movement_name }}')"
+               class="modal-close collection-item">{{ movement.movement_name }}</a>
+        {% endfor %}
+    </div>
 {% endif %}

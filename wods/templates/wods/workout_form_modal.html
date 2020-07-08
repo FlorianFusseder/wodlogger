@@ -1,4 +1,3 @@
-<button data-target="modal1" class="btn modal-trigger">Modal</button>
 <div id="modal1" class="modal">
     <script>
         $(document).ready(function () {
@@ -37,23 +36,17 @@
     </script>
     <div class="modal-content">
         <div class="row">
-
             <div class="input-field col s12">
                 <i class="material-icons prefix">search</i>
                 <input id="user-input" type="text">
-                <label for="icon_prefix">Search</label>
+                <label for="user-input">Search</label>
             </div>
 
             <div id="replaceable-content" class="col s12">
                 {% include 'wodmovements/movement-result-partial.html' %}
             </div>
-
         </div>
-
-    </div>
-    <div class="modal-footer">
-        <button id="add_more" class="btn waves-effect waves-light" type="button">add
-            <i class="material-icons right">add</i>
-        </button>
     </div>
 </div>
+<button data-target="modal1" class="btn modal-trigger">Add Movement
+<i class="material-icons right">add</i></button>
