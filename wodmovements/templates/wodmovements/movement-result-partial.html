@@ -2,7 +2,8 @@
 {% if movements %}
     <div class="collection">
         {% for movement in movements %}
-            <a href="#" onclick="add_movement('{{ movement.id }}', '{{ movement.movement_name }}')"
+            <a href="#"
+               onclick="add_movement('{{ movement.id }}', '{{ movement.movement_name }}', '{{ movement.has_reps }}', '{{ movement.has_weight }}', '{{ movement.has_distance }}', '{{ movement.has_height }}')"
                class="modal-close collection-item">{{ movement.movement_name }}</a>
         {% endfor %}
     </div>

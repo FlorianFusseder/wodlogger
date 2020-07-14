@@ -37,17 +37,49 @@
                 {% if field.label == 'Reps' %}
                     {{ field|materialize:'s1' }}
                 {% elif field.label == 'Movement' %}
-                    {{ field|materialize:'s11' }}
+                    {{ field|materialize:'s-placeholder' }}
+                {% elif field.label == 'Kg' %}
+                    {{ field|materialize:'s1' }}
+                {% elif field.label == 'Distance' %}
+                    {{ field|materialize:'s1' }}
+                {% elif field.label == 'Height' %}
+                    {{ field|materialize:'s1' }}
                 {% endif %}
             {% endfor %}
         </div>
 
         <script>
-            function add_movement(id, name) {
-                console.info(id, name)
+            function add_movement(id, name, has_reps, has_weight, has_distance, has_height) {
+                console.info(id, name, has_reps, has_weight, has_distance, has_height)
                 let form_idx = $('#id_form-TOTAL_FORMS').val();
-                let jQuery = $('#empty_form').html().replace(/__prefix__/g, form_idx).replace(/placeholder-string/g, name);
-                console.info(jQuery)
+                let empty_form = $('#empty_form');
+                let field_count = 12
+                if (has_reps === "True") {
+                    field_count = field_count - 1
+                } else {
+                    empty_form = empty_form.not('#id_form-__prefix__-reps')
+                }
+                if (has_weight === 'True') {
+                    field_count = field_count - 1
+                } else {
+                    empty_form = empty_form.not('#id_form-__prefix__-kg')
+                }
+                if (has_distance === 'True') {
+                    field_count = field_count - 1
+                } else {
+                    empty_form = empty_form.not('#id_form-__prefix__-distance')
+                }
+                if (has_height === 'True') {
+                    field_count = field_count - 1
+                } else {
+                    empty_form = empty_form.not('#id_form-__prefix__-height')
+                }
+
+                let jQuery = empty_form.html()
+                    .replace(/__prefix__/g, form_idx)
+                    .replace(/placeholder-string/g, name)
+                    .replace(/s-placeholder/g, 's' + field_count)
+
                 $('#form_set_collection').append(jQuery);
                 $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
             }

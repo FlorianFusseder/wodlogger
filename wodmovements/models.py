@@ -5,10 +5,11 @@ from django.utils.translation import gettext_lazy as _
 class Movement(models.Model):
     class Modality(models.TextChoices):
         GYMNASTIC = 'G', _('Gymnastics'),
-        WEIGHTLIFTING = 'W', _('Wightlifiting'),
+        WEIGHTLIFTING = 'W', _('Weightlifting'),
         MONOSTRUCTURAL = 'M', _("Monostructural")
 
     movement_name = models.CharField(max_length=50)
+    has_reps = models.BooleanField()
     has_weight = models.BooleanField()
     has_distance = models.BooleanField()
     has_height = models.BooleanField()

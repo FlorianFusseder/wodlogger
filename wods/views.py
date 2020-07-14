@@ -74,9 +74,6 @@ def create_workout(request):
 
     if request.method == 'POST':
         components_form_set = ComponentsFormSet(request.POST)
-        cleaned_data = components_form_set.cleaned_data
-        print(cleaned_data)
-
         workout_form = WorkoutForm(request.POST)
         if components_form_set.is_valid() and workout_form.is_valid():
             workout: Workout = workout_form.save(commit=False)
